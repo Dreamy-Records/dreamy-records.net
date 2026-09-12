@@ -1,0 +1,34 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const pages = [
+  { href: '/', label: 'HOME', ja: 'トップページ' },
+  { href: '/about/', label: 'ABOUT', ja: 'サークルについて' },
+  { href: '/news/', label: 'NEWS', ja: '最新情報' },
+  { href: '/members/', label: 'MEMBERS', ja: 'メンバー紹介' },
+  { href: '/discography/', label: 'DISCOGRAPHY', ja: '作品一覧' },
+  { href: '/events/', label: 'EVENTS', ja: 'イベント情報' },
+  { href: '/shop/', label: 'SHOP', ja: '取扱ショップ' },
+  { href: '/contact/', label: 'CONTACT', ja: 'お問い合わせ' },
+  { href: '/privacy/', label: 'PRIVACY POLICY', ja: 'プライバシーポリシー' },
+];
+---
+
+<SiteLayout title="Sitemap — Dreamy Records" page="sitemap">
+  <main class="page-shell dark-page sitemap-page">
+    <header class="page-title"><span>SITEMAP</span><h1>SITEMAP</h1><p>サイトマップ</p></header>
+
+    <nav class="sitemap-links profile-reveal" aria-label="サイトマップ">
+      {
+        pages.map(({ href, label, ja }, index) => (
+          <a href={href}>
+            <small>{String(index + 1).padStart(2, '0')}</small>
+            <strong>{label}</strong>
+            <span>{ja}</span>
+            <i aria-hidden="true">↗</i>
+          </a>
+        ))
+      }
+    </nav>
+  </main>
+</SiteLayout>

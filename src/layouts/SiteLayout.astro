@@ -56,7 +56,7 @@ const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
       } catch {}
     </script></head
   >
-  <body class={page ? 'inner-body' : 'home-body'}>
+  <body id="top" class={page ? 'inner-body' : 'home-body'}>
     <header class="header">
       <a href="/" class="brand"><img src="/assets/logo.png" alt="Dreamy Records" /></a><nav
         class="desktop-nav"
@@ -90,6 +90,17 @@ const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
       </div>
     </div>
     <slot />
+    {
+      page && (
+        <footer class="site-footer">
+          <nav class="site-footer-nav" aria-label="フッターナビゲーション">
+            <a href="/contact/">CONTACT</a>
+            <a href="/privacy/">PRIVACY POLICY</a>
+            <a href="/sitemap/">SITEMAP</a>
+          </nav>
+        </footer>
+      )
+    }
     <script>
       import gsap from 'gsap';
       const animationRoot = document.documentElement;
