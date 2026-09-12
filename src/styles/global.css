@@ -37,8 +37,10 @@ img {
 .js:not(.site-animation-ready) .event-reveal,
 .js:not(.site-animation-ready) .shop-reveal,
 .js:not(.site-animation-ready) .contact-reveal,
-.js:not(.site-animation-ready) .error-reveal {
-  opacity: 0;
+.js:not(.site-animation-ready) .error-reveal,
+.js:not(.site-animation-ready) .profile-reveal {
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
 .error-page {
   position: relative;
@@ -315,7 +317,8 @@ img {
 }
 .js:not(.home-animation-ready) .home .hero-content > :not(.hero-catchphrase),
 .js:not(.home-animation-ready) .home .socials a {
-  opacity: 0;
+  visibility: hidden !important;
+  opacity: 0 !important;
 }
 .kicker {
   font-size: 9px;
@@ -900,6 +903,12 @@ img {
     border-bottom: 1px solid #ffffff1f;
     -webkit-backdrop-filter: blur(12px);
     backdrop-filter: blur(12px);
+  }
+  .home-body .header {
+    background: transparent;
+    border-bottom: 0;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
   }
   .desktop-nav {
     display: none;
@@ -2003,7 +2012,72 @@ img {
   font-family: 'Noto Sans JP';
   font-size: 10px;
 }
+.thanks-page {
+  min-height: 100svh;
+}
+.thanks-content {
+  width: min(760px, 100%);
+  margin-left: auto;
+  padding: clamp(45px, 8vw, 100px) 0 30px;
+  border-top: 1px solid #333;
+}
+.thanks-content > span {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+}
+.thanks-content h2 {
+  margin: 24px 0;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: clamp(1.8rem, 4.5vw, 4rem);
+  line-height: 1.35;
+}
+.thanks-content p {
+  max-width: 620px;
+  margin: 0;
+  color: #ccc;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 13px;
+  line-height: 2;
+}
+.thanks-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 48px;
+}
+.thanks-actions a {
+  display: flex;
+  width: min(240px, 100%);
+  justify-content: space-between;
+  padding: 17px 18px;
+  border: 1px solid #555;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  transition:
+    color 0.25s,
+    border-color 0.25s;
+}
+.thanks-actions a:hover,
+.thanks-actions a:focus-visible {
+  border-color: #fff;
+  color: #fff;
+  outline: none;
+}
 @media (max-width: 760px) {
+  .thanks-content {
+    margin: 0;
+    padding-top: 45px;
+  }
+  .thanks-content h2 {
+    font-size: 1.75rem;
+  }
+  .thanks-actions {
+    flex-direction: column;
+  }
+  .thanks-actions a {
+    width: 100%;
+  }
   .global-menu nav strong {
     font-size: 10vw;
   }

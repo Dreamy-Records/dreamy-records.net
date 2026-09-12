@@ -6,6 +6,7 @@ const {
   page = '',
   description = '東方同人音楽アレンジサークル Dreamy Records 公式サイト',
   image,
+  noindex = false,
 } = Astro.props;
 const defaultOgImage = '/assets/news/19-Dreamy-Records-header-1.png';
 const ogImageBase = import.meta.env.DEV ? Astro.url.origin : Astro.site;
@@ -20,7 +21,7 @@ const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
     ><meta charset="UTF-8" /><meta name="viewport" content="width=device-width" /><meta
       name="description"
       content={description}
-    />{isStaging && <meta name="robots" content="noindex, nofollow, noarchive" />}<link
+    />{(isStaging || noindex) && <meta name="robots" content="noindex, nofollow, noarchive" />}<link
       rel="alternate"
       type="application/rss+xml"
       title="Dreamy Records NEWS"
@@ -42,6 +43,12 @@ const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
       content={description}
     /><meta name="twitter:image" content={ogImage} /><title>{title}</title><script is:inline>
       document.documentElement.classList.add('js');
+      window.setTimeout(() => {
+        if (document.documentElement.dataset.siteAnimationsInitialized !== 'true') {
+          document.documentElement.dataset.animationFallbackRevealed = 'true';
+          document.documentElement.classList.add('home-animation-ready', 'site-animation-ready');
+        }
+      }, 2500);
       try {
         const navigation = performance.getEntriesByType('navigation')[0];
         if (navigation && navigation.type === 'back_forward')
@@ -87,6 +94,7 @@ const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
       import gsap from 'gsap';
       const animationRoot = document.documentElement;
       const alreadyInitialized = animationRoot.dataset.siteAnimationsInitialized === 'true';
+      const fallbackRevealed = animationRoot.dataset.animationFallbackRevealed === 'true';
       animationRoot.dataset.siteAnimationsInitialized = 'true';
 
       if (!alreadyInitialized) {
@@ -153,7 +161,7 @@ const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
             });
           }
         });
-        if (!reduce && !historyReturn) {
+        if (!reduce && !historyReturn && !fallbackRevealed) {
           animateIfPresent(
             '.page-title > *',
             { y: 55, opacity: 0 },
@@ -169,7 +177,7 @@ const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
           if (newsRows.length)
             gsap.fromTo(
               newsRows,
-              { y: 28, opacity: 0.35 },
+              { y: 28, opacity: 0 },
               {
                 y: 0,
                 opacity: 1,
