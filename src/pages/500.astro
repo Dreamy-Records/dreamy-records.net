@@ -1,0 +1,19 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+
+<SiteLayout title="500 Server Error — Dreamy Records" page="error">
+  <main class="error-page">
+    <div class="error-noise" aria-hidden="true">500 500 500 500 500</div>
+    <section class="error-content error-reveal">
+      <span>ERROR / SERVER ERROR</span>
+      <p class="error-code">500</p>
+      <h1>エラーが発生しました</h1>
+      <p>時間をおいてから、もう一度アクセスしてください。</p>
+      <nav aria-label="エラーページから移動">
+        <a href="/">TOPへ戻る <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        <a href="/news/">NEWSを見る</a>
+      </nav>
+    </section>
+  </main>
+</SiteLayout>

@@ -1,0 +1,358 @@
+---
+import '../styles/global.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+const {
+  title = 'Dreamy Records',
+  page = '',
+  description = '東方同人音楽アレンジサークル Dreamy Records 公式サイト',
+  image,
+} = Astro.props;
+const defaultOgImage = '/assets/news/19-Dreamy-Records-header-1.png';
+const ogImageBase = import.meta.env.DEV ? Astro.url.origin : Astro.site;
+const ogImage = new URL(image || defaultOgImage, ogImageBase).href;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+---
+
+<!doctype html>
+<html lang="ja">
+  <head
+    ><meta charset="UTF-8" /><meta name="viewport" content="width=device-width" /><meta
+      name="description"
+      content={description}
+    /><link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Dreamy Records NEWS"
+      href="/rss.xml"
+    /><link rel="canonical" href={canonicalUrl} /><meta property="og:title" content={title} /><meta
+      property="og:description"
+      content={description}
+    /><meta property="og:type" content={page === 'news-detail' ? 'article' : 'website'} /><meta
+      property="og:url"
+      content={Astro.url.href}
+    /><meta property="og:image" content={ogImage} /><meta
+      property="og:image:url"
+      content={ogImage}
+    /><meta property="og:image:alt" content={`${title} OGP image`} /><meta
+      name="twitter:card"
+      content="summary_large_image"
+    /><meta name="twitter:title" content={title} /><meta
+      name="twitter:description"
+      content={description}
+    /><meta name="twitter:image" content={ogImage} /><title>{title}</title><script is:inline>
+      document.documentElement.classList.add('js');
+      try {
+        const navigation = performance.getEntriesByType('navigation')[0];
+        if (navigation && navigation.type === 'back_forward')
+          document.documentElement.classList.add('history-return');
+      } catch {}
+    </script></head
+  >
+  <body class={page ? 'inner-body' : 'home-body'}>
+    <header class="header">
+      <a href="/" class="brand"><img src="/assets/logo.png" alt="Dreamy Records" /></a><nav
+        class="desktop-nav"
+        aria-label="メインナビゲーション"
+      >
+        <a href="/about/">ABOUT</a><a href="/news/">NEWS</a><a href="/members/">MEMBERS</a><a
+          href="/discography/">DISCOGRAPHY</a
+        ><a href="/events/">EVENTS</a><a href="/shop/">SHOP</a><a href="/contact/">CONTACT</a>
+      </nav><button
+        class="menu-button"
+        aria-expanded="false"
+        aria-controls="global-menu"
+        aria-label="メニューを開く"><span>MENU</span><i></i><i></i><i></i></button
+      >
+    </header>
+    <div id="global-menu" class="global-menu" aria-hidden="true">
+      <div class="menu-meta">
+        <span>DREAMY RECORDS</span><span>TOUHOU ARRANGE MUSIC CIRCLE</span>
+      </div><nav>
+        <a href="/about/"><small>01</small><strong>ABOUT</strong><span>サークルについて</span></a><a
+          href="/news/"><small>02</small><strong>NEWS</strong><span>最新情報</span></a
+        ><a href="/members/"><small>03</small><strong>MEMBERS</strong><span>メンバー紹介</span></a
+        ><a href="/discography/"
+          ><small>04</small><strong>DISCOGRAPHY</strong><span>作品一覧</span></a
+        ><a href="/events/"><small>05</small><strong>EVENTS</strong><span>イベント情報</span></a><a
+          href="/shop/"><small>06</small><strong>SHOP</strong><span>取扱ショップ</span></a
+        ><a href="/contact/"><small>07</small><strong>CONTACT</strong><span>お問い合わせ</span></a>
+      </nav><div class="menu-foot">
+        <a href="https://x.com/dreamy_records" target="_blank" rel="noreferrer">X / TWITTER ↗</a
+        ><span>© 2026 DREAMY RECORDS</span>
+      </div>
+    </div>
+    <slot />
+    <script>
+      import gsap from 'gsap';
+      const animationRoot = document.documentElement;
+      const alreadyInitialized = animationRoot.dataset.siteAnimationsInitialized === 'true';
+      animationRoot.dataset.siteAnimationsInitialized = 'true';
+
+      if (!alreadyInitialized) {
+        const button = document.querySelector('.menu-button');
+        const menu = document.querySelector('.global-menu');
+        const newsRows = gsap.utils.toArray<HTMLElement>('.news-row');
+        const revealNews = () => {
+          if (newsRows.length) gsap.set(newsRows, { clearProps: 'opacity,visibility,transform' });
+        };
+        const animateIfPresent = (
+          selector: string,
+          fromVars: gsap.TweenVars,
+          toVars: gsap.TweenVars,
+        ) => {
+          const targets = gsap.utils.toArray<HTMLElement>(selector);
+          if (targets.length) {
+            gsap.killTweensOf(targets);
+            gsap.fromTo(targets, fromVars, { ...toVars, overwrite: 'auto' });
+          }
+        };
+        const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const historyReturn = document.documentElement.classList.contains('history-return');
+        let menuAnimating = false;
+        button?.addEventListener('click', () => {
+          if (menuAnimating || !menu) return;
+          const open = button.getAttribute('aria-expanded') === 'true';
+          button.setAttribute('aria-expanded', String(!open));
+          button.setAttribute('aria-label', open ? 'メニューを開く' : 'メニューを閉じる');
+          menu.setAttribute('aria-hidden', String(open));
+          document.body.classList.toggle('menu-open', !open);
+          if (!open) {
+            menu.classList.add('is-open');
+            if (!reduce)
+              gsap.fromTo(
+                '.global-menu nav a',
+                { y: 45, opacity: 0 },
+                {
+                  y: 0,
+                  opacity: 1,
+                  duration: 0.65,
+                  stagger: 0.08,
+                  ease: 'power3.out',
+                  delay: 0.2,
+                  clearProps: 'opacity,transform',
+                },
+              );
+          } else if (reduce) {
+            menu.classList.remove('is-open');
+          } else {
+            menuAnimating = true;
+            gsap.to('.global-menu nav a', {
+              y: -24,
+              opacity: 0,
+              duration: 0.28,
+              stagger: { each: 0.045, from: 'end' },
+              ease: 'power2.in',
+              onComplete: () => {
+                menu.classList.remove('is-open');
+                window.setTimeout(() => {
+                  gsap.set('.global-menu nav a', { clearProps: 'opacity,transform' });
+                  menuAnimating = false;
+                }, 680);
+              },
+            });
+          }
+        });
+        if (!reduce && !historyReturn) {
+          animateIfPresent(
+            '.page-title > *',
+            { y: 55, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1,
+              stagger: 0.08,
+              ease: 'power4.out',
+              clearProps: 'opacity,transform',
+            },
+          );
+          if (newsRows.length)
+            gsap.fromTo(
+              newsRows,
+              { y: 28, opacity: 0.35 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.65,
+                stagger: 0.07,
+                ease: 'power3.out',
+                onComplete: revealNews,
+              },
+            );
+          animateIfPresent(
+            '.member',
+            { y: 45, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.09,
+              ease: 'power3.out',
+              delay: 0.3,
+              clearProps: 'opacity,transform',
+            },
+          );
+          animateIfPresent(
+            '.about-reveal',
+            { y: 42, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.85,
+              stagger: 0.1,
+              ease: 'power3.out',
+              delay: 0.25,
+              clearProps: 'opacity,transform',
+            },
+          );
+          animateIfPresent(
+            '.event-reveal, .shop-reveal, .contact-reveal, .error-reveal',
+            { y: 38, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.8,
+              stagger: 0.09,
+              ease: 'power3.out',
+              delay: 0.2,
+              clearProps: 'opacity,transform',
+            },
+          );
+          if (!document.querySelector('.member-profile'))
+            animateIfPresent(
+              '.profile-reveal',
+              { y: 42, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.85,
+                stagger: 0.1,
+                ease: 'power3.out',
+                delay: 0.15,
+                clearProps: 'opacity,transform',
+              },
+            );
+          animateIfPresent(
+            '.hero-content > *',
+            { y: 36, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 1.1,
+              stagger: 0.12,
+              ease: 'power3.out',
+              delay: 0.35,
+              clearProps: 'opacity,transform',
+            },
+          );
+          animateIfPresent(
+            '.socials a',
+            { y: 18, opacity: 0 },
+            {
+              y: 0,
+              opacity: 1,
+              duration: 0.7,
+              stagger: 0.08,
+              delay: 1.05,
+              clearProps: 'opacity,transform',
+            },
+          );
+          if (document.querySelector('.article-page')) {
+            const articleElements = gsap.utils.toArray<HTMLElement>(
+              '.article-back:not(.article-back-bottom), .article-head > div, .article-head h1, .article-image, .article-body > *, .article-share, .article-back-bottom',
+            );
+            const finishArticle = () => {
+              document.documentElement.classList.add('article-ready');
+              gsap.set(articleElements, { clearProps: 'opacity,visibility,transform' });
+            };
+            const articleTimeline = gsap.timeline({
+              defaults: { ease: 'power3.out' },
+              onComplete: finishArticle,
+            });
+            articleTimeline.fromTo(
+              '.article-back:not(.article-back-bottom)',
+              { x: -20, opacity: 0 },
+              { x: 0, opacity: 1, duration: 0.35 },
+              0,
+            );
+            articleTimeline.fromTo(
+              '.article-head > div',
+              { y: 22, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.32 },
+              0.12,
+            );
+            articleTimeline.fromTo(
+              '.article-head h1',
+              { y: 50, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.48 },
+              0.22,
+            );
+            if (document.querySelector('.article-image')) {
+              articleTimeline.fromTo(
+                '.article-image',
+                { y: 45, opacity: 0, scale: 0.985 },
+                { y: 0, opacity: 1, scale: 1, duration: 0.5 },
+                0.38,
+              );
+            }
+            articleTimeline.fromTo(
+              '.article-body > *',
+              { y: 28, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.4, stagger: { amount: 0.35 } },
+              0.42,
+            );
+            articleTimeline.fromTo(
+              '.article-share',
+              { y: 18, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.3 },
+              0.66,
+            );
+            articleTimeline.fromTo(
+              '.article-back-bottom',
+              { y: 18, opacity: 0 },
+              { y: 0, opacity: 1, duration: 0.3 },
+              0.7,
+            );
+            window.setTimeout(finishArticle, 1800);
+          }
+        } else {
+          revealNews();
+          document.documentElement.classList.add('article-ready');
+        }
+        document.documentElement.classList.add('home-animation-ready', 'site-animation-ready');
+        const fadeHistoryReturn = () => {
+          document.documentElement.classList.add('history-return');
+          const historyTargets = Array.from(
+            document.body.querySelectorAll<HTMLElement>(
+              ':scope > :not(.header):not(.global-menu):not(script)',
+            ),
+          );
+          if (!historyTargets.length) {
+            document.documentElement.classList.remove('history-return');
+            return;
+          }
+          gsap.killTweensOf(historyTargets);
+          gsap.fromTo(
+            historyTargets,
+            { opacity: 0 },
+            {
+              opacity: 1,
+              duration: 0.55,
+              ease: 'power2.out',
+              clearProps: 'opacity',
+              onComplete: () => document.documentElement.classList.remove('history-return'),
+            },
+          );
+        };
+        if (historyReturn && !reduce) requestAnimationFrame(fadeHistoryReturn);
+        window.addEventListener('pageshow', (event) => {
+          if (event.persisted) {
+            revealNews();
+            document.documentElement.classList.add('article-ready', 'member-intro-complete');
+            if (!reduce) fadeHistoryReturn();
+          }
+        });
+        window.setTimeout(revealNews, 1800);
+      }
+    </script>
+  </body>
+</html>

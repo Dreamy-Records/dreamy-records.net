@@ -1,0 +1,33 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { members } from '../data/members';
+---
+
+<SiteLayout title="Members — Dreamy Records" page="members"
+  ><main class="page-shell dark-page members-page">
+    <header class="page-title">
+      <span>03 / MEMBERS</span><h1>MEMBERS</h1><p>メンバー紹介</p>
+    </header><section class="member-grid">
+      {
+        members.map((member, i) => (
+          <a class="member" href={`/members/${member.slug}/`}>
+            <>
+              <div class="member-no">{String(i + 1).padStart(2, '0')}</div>
+              <div class:list={['avatar', { 'avatar-fallback': !member.icon }]}>
+                {member.icon ? (
+                  <img src={member.icon} alt={`${member.name} アイコン`} />
+                ) : (
+                  <span>{member.nameEn.slice(0, 1)}</span>
+                )}
+                <i>VIEW PROFILE ↗</i>
+              </div>
+              <p>{member.role}</p>
+              <h2>{member.name}</h2>
+              <small>{member.nameEn}</small>
+            </>
+          </a>
+        ))
+      }
+    </section>
+  </main></SiteLayout
+>

@@ -1,0 +1,33 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import { getCollection } from 'astro:content';
+const news = (await getCollection('news')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const formatDate = (date: Date) =>
+  date
+    .toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })
+    .replaceAll('/', '.');
+---
+
+<SiteLayout title="News — Dreamy Records" page="news"
+  ><main class="page-shell dark-page news-page">
+    <header class="page-title"><span>02 / NEWS</span><h1>NEWS</h1><p>最新情報</p></header><section
+      class="news-list"
+    >
+      {
+        news.map((item, i) => (
+          <a href={`/news/${item.id}/`} class="news-row">
+            <>
+              <span class="news-index">{String(i + 1).padStart(2, '0')}</span>
+              <time datetime={item.data.date.toISOString()}>{formatDate(item.data.date)}</time>
+              <span class="category">{item.data.category}</span>
+              <h2>{item.data.title}</h2>
+              <i>↗</i>
+            </>
+          </a>
+        ))
+      }
+    </section>
+  </main></SiteLayout
+>

@@ -1,0 +1,174 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { members, type Member } from '../../data/members';
+export function getStaticPaths() {
+  return members.map((member) => ({ params: { slug: member.slug }, props: { member } }));
+}
+const { member } = Astro.props as { member: Member };
+const index = members.findIndex((item) => item.slug === member.slug);
+const prev = members[(index - 1 + members.length) % members.length];
+const next = members[(index + 1) % members.length];
+const repeatedName = Array.from({ length: 7 }, () => member.nameEn);
+---
+
+<SiteLayout title={`${member.name} — Dreamy Records`} page="member-detail">
+  <div class="member-intro" aria-hidden="true"></div>
+  <main class="member-profile">
+    <div class="profile-name-bg" aria-hidden="true">
+      <div class="profile-name-track profile-name-track-left">
+        {repeatedName.map((name) => <span>{name}</span>)}
+      </div>
+      <div class="profile-name-track profile-name-track-right">
+        {repeatedName.map((name) => <span>{name}</span>)}
+      </div>
+    </div>
+    <div class="profile-content">
+      <a class="profile-back profile-reveal" href="/members/">← ALL MEMBERS</a>
+      <section class="profile-hero">
+        <div
+          class:list={[
+            'profile-icon',
+            'profile-reveal',
+            'profile-glitch-target',
+            { 'profile-icon-fallback': !member.icon },
+          ]}
+        >
+          {
+            member.icon ? (
+              <img src={member.icon} alt={`${member.name} アイコン`} />
+            ) : (
+              <span>{member.nameEn.slice(0, 1)}</span>
+            )
+          }<small
+            >{String(index + 1).padStart(2, '0')} / {String(members.length).padStart(2, '0')}</small
+          >
+        </div>
+        <div class="profile-heading profile-reveal profile-glitch-target">
+          <p>{member.role}</p><h1>{member.name}</h1><strong>{member.nameEn}</strong>
+        </div>
+      </section>
+      <section class="profile-body">
+        <div class="profile-about profile-reveal">
+          <span>ABOUT</span>{member.bio.map((paragraph) => <p>{paragraph}</p>)}
+        </div><div class="profile-social profile-reveal">
+          <span>SOCIAL</span>{
+            member.socials.length ? (
+              member.socials.map((social) => (
+                <a href={social.href} target="_blank" rel="noreferrer">
+                  {social.label}
+                  <b>↗</b>
+                </a>
+              ))
+            ) : (
+              <p>公開中のSNSはありません。</p>
+            )
+          }
+        </div>
+      </section>
+      <nav class="profile-pagination profile-reveal" aria-label="メンバープロフィール">
+        <a href={`/members/${prev.slug}/`}><small>PREVIOUS</small><span>← {prev.name}</span></a><a
+          href={`/members/${next.slug}/`}><small>NEXT</small><span>{next.name} →</span></a
+        >
+      </nav>
+    </div>
+  </main>
+</SiteLayout>
+
+<script>
+  import gsap from 'gsap';
+
+  const intro = document.querySelector<HTMLElement>('.member-intro');
+  const reveals = gsap.utils.toArray<HTMLElement>('.member-profile .profile-reveal');
+  const glitchTargets = gsap.utils.toArray<HTMLElement>('.profile-glitch-target');
+  const otherReveals = reveals.filter((item) => !item.classList.contains('profile-glitch-target'));
+  const leftTrack = document.querySelector<HTMLElement>('.profile-name-track-left');
+  const rightTrack = document.querySelector<HTMLElement>('.profile-name-track-right');
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const historyReturn = document.documentElement.classList.contains('history-return');
+
+  const finishIntro = () => {
+    document.documentElement.classList.add('member-intro-complete');
+    document.body.style.removeProperty('overflow');
+    if (intro) intro.style.display = 'none';
+  };
+
+  if (!intro || reduceMotion || historyReturn) {
+    gsap.set(reveals, { opacity: 1, clearProps: 'transform,filter,clipPath' });
+    finishIntro();
+  } else {
+    document.body.style.overflow = 'hidden';
+    gsap.set(reveals, { opacity: 0 });
+
+    const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    timeline
+      .to(intro, { opacity: 0, duration: 0.16, ease: 'none' }, '+=.12')
+      .set(glitchTargets, {
+        opacity: 1,
+        clipPath: 'inset(46% 0 46% 0)',
+        filter: 'contrast(3) brightness(1.5)',
+      })
+      .to(glitchTargets, {
+        clipPath: 'inset(6% 0 64% 0)',
+        x: -28,
+        skewX: 5,
+        duration: 0.045,
+        stagger: 0.018,
+        ease: 'steps(1)',
+      })
+      .to(glitchTargets, {
+        clipPath: 'inset(58% 0 8% 0)',
+        x: 25,
+        skewX: -4,
+        filter: 'contrast(4) brightness(0.7) invert(0.18)',
+        duration: 0.05,
+        ease: 'steps(1)',
+      })
+      .to(glitchTargets, {
+        clipPath: 'inset(18% 0 25% 0)',
+        x: -18,
+        scaleX: 1.045,
+        skewX: 3,
+        filter: 'contrast(3.5) brightness(1.8)',
+        duration: 0.045,
+        ease: 'steps(1)',
+      })
+      .to(glitchTargets, {
+        clipPath: 'inset(2% 0 3% 0)',
+        x: 13,
+        scaleX: 0.985,
+        skewX: -2,
+        duration: 0.055,
+        ease: 'steps(2)',
+      })
+      .to(glitchTargets, {
+        clipPath: 'inset(0% 0 0% 0)',
+        x: -7,
+        scaleX: 1.01,
+        skewX: 1,
+        filter: 'contrast(2.2)',
+        duration: 0.06,
+        ease: 'steps(1)',
+      })
+      .to(glitchTargets, {
+        x: 0,
+        scaleX: 1,
+        skewX: 0,
+        filter: 'none',
+        duration: 0.18,
+        ease: 'power2.out',
+        clearProps: 'transform,filter,clipPath',
+      })
+      .to(otherReveals, { opacity: 1, y: 0, duration: 0.62, stagger: 0.075 }, '-=.08')
+      .call(finishIntro);
+  }
+
+  if (!reduceMotion) {
+    if (leftTrack) gsap.to(leftTrack, { xPercent: -50, duration: 24, repeat: -1, ease: 'none' });
+    if (rightTrack)
+      gsap.fromTo(
+        rightTrack,
+        { xPercent: -50 },
+        { xPercent: 0, duration: 28, repeat: -1, ease: 'none' },
+      );
+  }
+</script>

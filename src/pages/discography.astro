@@ -1,0 +1,247 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+const releases = [
+  {
+    code: 'DMERCD–008',
+    year: '2026',
+    title: 'Dream Dance Floor.01',
+    image: '/assets/1-1024x1012.webp',
+    link: 'https://sp.dreamy-records.net/',
+  },
+  {
+    code: 'DMERCD–005',
+    year: '2025',
+    title: 'Future Magic',
+    image: '/assets/ジャケ単体-1920x1920.webp',
+    link: 'https://dreamy-records.net/discography/dmer005/',
+  },
+  {
+    code: 'DMERCD–002',
+    year: '2024',
+    title: 'Planet World',
+    image: '/assets/ジャケ表.webp',
+    link: 'https://dreamy-records.net/2024/08/07/planet-world/',
+  },
+  {
+    code: 'DMERCD–007',
+    year: '2025',
+    title: 'Eclipse',
+    image: '/assets/art.webp',
+    link: 'https://dreamy-records.net/discography/dmer007/',
+  },
+  {
+    code: 'DMERCD–001',
+    year: '2024',
+    title: 'Dream Break',
+    image: '/assets/かんせ～-1024x1024.png',
+    link: 'https://dreamy-records.net/music/',
+  },
+  {
+    code: 'DMERCD–004',
+    year: '2024',
+    title: 'Forever Night',
+    image: '/assets/ちくしょー.webp',
+    link: 'https://dreamy-records.net/2024/10/19/forever-night/',
+  },
+  {
+    code: 'DMERCD–003',
+    year: '2024',
+    title: 'Dream Break Remix Phase.1',
+    image: '/assets/表-1024x1024.webp',
+    link: 'https://dreamy-records.net/2024/09/23/all-dreambreak-remix-phase-1/',
+  },
+  {
+    code: 'DMERCD–006',
+    year: '2025',
+    title: 'Remaster Collection',
+    image: '/assets/IMG_1046.webp',
+    link: 'https://dreamy-records.net/discography/dmer006/',
+  },
+];
+---
+
+<SiteLayout title="Discography — Dreamy Records" page="discography"
+  ><main class="page-shell dark-page coverflow-page">
+    <header class="page-title compact-title">
+      <span>04 / DISCOGRAPHY</span><h1>MUSIC</h1><p>作品一覧</p>
+    </header><section class="coverflow" aria-label="アルバムを選択">
+      <div class="coverflow-stage">
+        <button class="flow-prev flow-side-arrow" aria-label="前の作品">←</button>{
+          releases.map((r, i) => (
+            <a
+              class="flow-cover"
+              href={r.link}
+              data-index={i}
+              data-title={r.title}
+              data-code={r.code}
+              data-year={r.year}
+              data-link={r.link}
+              aria-label={`${r.title}を選択`}
+            >
+              <>
+                <img src={r.image} alt={`${r.title} ジャケット`} draggable="false" />
+                <span class="reflection">
+                  <img src={r.image} alt="" draggable="false" />
+                </span>
+              </>
+            </a>
+          ))
+        }<button class="flow-next flow-side-arrow" aria-label="次の作品">→</button>
+      </div><div class="flow-controls">
+        <div class="flow-info">
+          <small id="flow-code">{releases[0].code} / {releases[0].year}</small><h2 id="flow-title">
+            {releases[0].title}
+          </h2><a class="flow-release-button" id="flow-link" href={releases[0].link}
+            >VIEW RELEASE ↗</a
+          >
+        </div>
+      </div><div class="flow-count">
+        <span id="flow-current">01</span> / {String(releases.length).padStart(2, '0')}
+      </div>
+    </section>
+  </main>
+  <script>
+    import gsap from 'gsap';
+    const covers = [...document.querySelectorAll<HTMLElement>('.flow-cover')];
+    const stage = document.querySelector<HTMLElement>('.coverflow-stage');
+    const title = document.querySelector('#flow-title');
+    const code = document.querySelector('#flow-code');
+    const current = document.querySelector('#flow-current');
+    const flowLink = document.querySelector<HTMLAnchorElement>('#flow-link');
+    let active = 0;
+    let startX = 0;
+    let dragX = 0;
+    let dragging = false;
+    let didDrag = false;
+    let pressedIndex = -1;
+    const spacing = () => Math.min(210, window.innerWidth * 0.28);
+    const render = (offset = 0, quick = false) => {
+      const n = covers.length;
+      covers.forEach((cover, i) => {
+        let d = i - active;
+        if (d > n / 2) d -= n;
+        if (d < -n / 2) d += n;
+        const abs = Math.abs(d);
+        gsap.to(cover, {
+          x: d * spacing() + offset,
+          scale: d === 0 ? 1 : Math.max(0.58, 0.78 - abs * 0.06),
+          rotationX: 0,
+          rotationY: d === 0 ? offset / 18 : d < 0 ? 48 : -48,
+          z: -abs * 170,
+          opacity: abs > 3 ? 0 : 1,
+          zIndex: n - abs,
+          duration: quick ? 0.14 : 0.75,
+          ease: quick ? 'power1.out' : 'power3.inOut',
+        });
+        cover.style.pointerEvents = abs > 3 ? 'none' : 'auto';
+        cover.classList.toggle('active', d === 0);
+      });
+      if (!offset) {
+        const item = covers[active];
+        if (title) title.textContent = item.dataset.title || '';
+        if (code) code.textContent = `${item.dataset.code} / ${item.dataset.year}`;
+        if (current) current.textContent = String(active + 1).padStart(2, '0');
+        if (flowLink) flowLink.href = item.dataset.link || '#';
+      }
+    };
+    const previous = () => {
+      active = (active - 1 + covers.length) % covers.length;
+      render();
+    };
+    const next = () => {
+      active = (active + 1) % covers.length;
+      render();
+    };
+    covers.forEach((cover, i) =>
+      cover.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (didDrag) {
+          return;
+        }
+        if (i !== active) {
+          active = i;
+          render();
+          return;
+        }
+
+        if (!matchMedia('(min-width:761px)').matches) {
+          const releaseUrl = cover.dataset.link;
+          if (releaseUrl) window.location.assign(releaseUrl);
+        }
+      }),
+    );
+    document.querySelector('.flow-prev')?.addEventListener('click', previous);
+    document.querySelector('.flow-next')?.addEventListener('click', next);
+    stage?.addEventListener('pointerdown', (e) => {
+      if ((e.target as HTMLElement).closest('.flow-side-arrow')) return;
+      const pressed = (e.target as HTMLElement).closest<HTMLElement>('.flow-cover');
+      pressedIndex = pressed ? Number(pressed.dataset.index) : -1;
+      dragging = true;
+      didDrag = false;
+      startX = e.clientX;
+      dragX = 0;
+    });
+    stage?.addEventListener('pointermove', (e) => {
+      if (dragging) {
+        dragX = e.clientX - startX;
+        if (Math.abs(dragX) > 14 && !didDrag) {
+          didDrag = true;
+          stage.setPointerCapture(e.pointerId);
+          stage.classList.add('is-dragging');
+        }
+        return;
+      }
+      if (e.pointerType === 'touch') return;
+      const cover = covers[active];
+      const rect = cover.getBoundingClientRect();
+      const nx = (e.clientX - (rect.left + rect.width / 2)) / (rect.width / 2);
+      const ny = (e.clientY - (rect.top + rect.height / 2)) / (rect.height / 2);
+      if (Math.max(Math.abs(nx), Math.abs(ny)) < 1.3)
+        gsap.to(cover, {
+          rotationY: nx * 7,
+          rotationX: -ny * 7,
+          scale: 1.025,
+          duration: 0.35,
+          ease: 'power2.out',
+        });
+      else
+        gsap.to(cover, {
+          rotationY: 0,
+          rotationX: 0,
+          scale: 1,
+          duration: 0.45,
+          ease: 'power3.out',
+        });
+    });
+    stage?.addEventListener('pointerleave', () => {
+      if (!dragging)
+        gsap.to(covers[active], {
+          rotationY: 0,
+          rotationX: 0,
+          scale: 1,
+          duration: 0.45,
+          ease: 'power3.out',
+        });
+    });
+    const endDrag = () => {
+      if (!dragging) return;
+      dragging = false;
+      stage?.classList.remove('is-dragging');
+      if (dragX > 45) previous();
+      else if (dragX < -45) next();
+      else render();
+      pressedIndex = -1;
+      window.setTimeout(() => {
+        didDrag = false;
+      }, 80);
+    };
+    stage?.addEventListener('pointerup', endDrag);
+    stage?.addEventListener('pointercancel', endDrag);
+    addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') previous();
+      if (e.key === 'ArrowRight') next();
+    });
+    addEventListener('resize', () => render());
+    render();
+  </script></SiteLayout
+>

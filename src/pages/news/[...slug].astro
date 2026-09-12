@@ -1,0 +1,121 @@
+---
+import SiteLayout from '../../layouts/SiteLayout.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('news');
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const date = entry.data.date
+  .toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })
+  .replaceAll('/', '.');
+const articleTitle = entry.data.title;
+const articleUrl = new URL(Astro.url.pathname, Astro.site).href;
+const xShareUrl = `https://x.com/intent/post?${new URLSearchParams({
+  text: articleTitle,
+  url: articleUrl,
+  hashtags: 'ドリレコ',
+})}`;
+---
+
+<SiteLayout
+  title={`${entry.data.title} — Dreamy Records`}
+  page="news-detail"
+  description={entry.data.description}
+  image={entry.data.image}
+>
+  <main class="article-page">
+    <a class="article-back" href="/news/">← ALL NEWS</a>
+    <article>
+      <header class="article-head">
+        <div>
+          <time datetime={entry.data.date.toISOString()}>{date}</time><span
+            >{entry.data.category}</span
+          >
+        </div>
+        <h1>{entry.data.title}</h1>
+      </header>
+      {
+        entry.data.image && entry.data.showImage && (
+          <img class="article-image" src={entry.data.image} alt="" />
+        )
+      }
+      <div class="article-body"><Content /></div>
+      <aside
+        class="article-share"
+        aria-label="この記事をシェア"
+        data-share-title={articleTitle}
+        data-share-url={articleUrl}
+      >
+        <p>SHARE THIS ARTICLE</p>
+        <div class="article-share-buttons">
+          <a href={xShareUrl} target="_blank" rel="noopener noreferrer">
+            <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+            <span>Xでシェア</span>
+          </a>
+          <button class="js-copy-article" type="button">
+            <i class="fa-regular fa-copy" aria-hidden="true"></i>
+            <span>タイトルとURLをコピー</span>
+          </button>
+          <button class="js-share-article" type="button">
+            <i class="fa-solid fa-arrow-up-from-bracket" aria-hidden="true"></i>
+            <span>その他のシェア</span>
+          </button>
+        </div>
+        <p class="article-share-status" role="status" aria-live="polite"></p>
+      </aside>
+    </article>
+    <a class="article-back article-back-bottom" href="/news/">← NEWS一覧へ戻る</a>
+  </main>
+</SiteLayout>
+
+<script>
+  const share = document.querySelector<HTMLElement>('.article-share');
+  const copyButton = share?.querySelector<HTMLButtonElement>('.js-copy-article');
+  const shareButton = share?.querySelector<HTMLButtonElement>('.js-share-article');
+  const status = share?.querySelector<HTMLElement>('.article-share-status');
+  const title = share?.dataset.shareTitle ?? document.title;
+  const url = share?.dataset.shareUrl ?? window.location.href;
+  const copyValue = `${title}\n${url}`;
+
+  const showStatus = (message: string) => {
+    if (!status) return;
+    status.textContent = message;
+    window.setTimeout(() => {
+      if (status.textContent === message) status.textContent = '';
+    }, 2200);
+  };
+
+  const copyArticle = async () => {
+    try {
+      await navigator.clipboard.writeText(copyValue);
+    } catch {
+      const textarea = document.createElement('textarea');
+      textarea.value = copyValue;
+      textarea.style.position = 'fixed';
+      textarea.style.opacity = '0';
+      document.body.append(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      textarea.remove();
+    }
+    showStatus('タイトルとURLをコピーしました');
+  };
+
+  copyButton?.addEventListener('click', copyArticle);
+  shareButton?.addEventListener('click', async () => {
+    if (!navigator.share) {
+      await copyArticle();
+      return;
+    }
+    try {
+      await navigator.share({ title, text: title, url });
+    } catch (error) {
+      if (error instanceof DOMException && error.name === 'AbortError') return;
+      showStatus('共有画面を開けませんでした');
+    }
+  });
+</script>

@@ -1,0 +1,19 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+
+<SiteLayout title="404 Page Not Found — Dreamy Records" page="error">
+  <main class="error-page">
+    <div class="error-noise" aria-hidden="true">404 404 404 404 404</div>
+    <section class="error-content error-reveal">
+      <span>ERROR / PAGE NOT FOUND</span>
+      <p class="error-code">404</p>
+      <h1>ページが見つかりません</h1>
+      <p>URLが変更されたか、ページが削除された可能性があります。</p>
+      <nav aria-label="エラーページから移動">
+        <a href="/">TOPへ戻る <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+        <a href="/news/">NEWSを見る</a>
+      </nav>
+    </section>
+  </main>
+</SiteLayout>

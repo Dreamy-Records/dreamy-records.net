@@ -1,0 +1,59 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const shops = [
+  {
+    name: 'BOOTH',
+    type: 'OFFICIAL ONLINE STORE',
+    description: 'Dreamy Records公式通販。CD・ダウンロード作品を取り扱っています。',
+    href: 'https://dreamyrecords.booth.pm/',
+  },
+  {
+    name: 'メロンブックス',
+    type: 'DOUJIN SHOP',
+    description: 'Dreamy Recordsの作品をお買い求めいただけます。',
+    href: 'https://www.melonbooks.co.jp/',
+    logo: '/assets/melonbooks.png',
+  },
+  {
+    name: 'AKIBA-HOBBY',
+    type: 'TOUHOU PROJECT SHOP',
+    description: 'Dreamy Recordsの作品をお買い求めいただけます。',
+    href: 'https://shop.akbh.jp/',
+    logo: '/assets/akiba-hobby.png',
+  },
+];
+---
+
+<SiteLayout
+  title="Shop — Dreamy Records"
+  page="shop"
+  description="Dreamy Records作品の取扱ショップ一覧です。"
+>
+  <main class="page-shell dark-page shop-page">
+    <header class="page-title"><span>06 / SHOP</span><h1>SHOP</h1><p>取扱ショップ</p></header>
+    <section class="shop-list" aria-label="Dreamy Records作品の取扱ショップ">
+      {
+        shops.map((shop) => (
+          <a class="shop-card shop-reveal" href={shop.href} target="_blank" rel="noreferrer">
+            {shop.logo ? (
+              <span class="shop-logo">
+                <img src={shop.logo} alt={shop.name} />
+              </span>
+            ) : (
+              <span class="shop-logo shop-logo--text">{shop.name}</span>
+            )}
+            <span class="shop-info">
+              <small>{shop.type}</small>
+              <h2>{shop.name}</h2>
+              <p>{shop.description}</p>
+            </span>
+            <span class="shop-link">
+              VISIT STORE <b>↗</b>
+            </span>
+          </a>
+        ))
+      }
+    </section>
+  </main>
+</SiteLayout>

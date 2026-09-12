@@ -1,0 +1,89 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const slides = [
+  '/assets/Dreamy Records header.png',
+  '/assets/Future Magic.webp',
+  '/assets/DDF.01.webp',
+];
+---
+
+<SiteLayout title="Dreamy Records — Dream Dance Floor.01">
+  <main class="home">
+    <div class="hero-slides" aria-label="Dreamy Records ビジュアル">
+      {
+        slides.map((src, index) => (
+          <img
+            class="hero-slide"
+            src={src}
+            alt=""
+            aria-hidden={index === 0 ? 'false' : 'true'}
+            loading={index === 0 ? 'eager' : 'lazy'}
+          />
+        ))
+      }
+    </div>
+    <div class="shade"></div>
+    <div class="grain"></div>
+    <div class="hero-content">
+      <h1 class="hero-catchphrase">BEYOND<br />THE<br />DREAM.</h1>
+    </div>
+    <div class="socials" aria-label="SNSリンク">
+      <a href="https://x.com/dreamy_records" target="_blank" rel="noreferrer" aria-label="X">
+        <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+      </a>
+      <a
+        href="https://www.youtube.com/@Dreamy_Records"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="YouTube"
+      >
+        <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+      </a>
+      <a
+        href="https://discord.com/invite/aTrtVQp4RQ"
+        target="_blank"
+        rel="noreferrer"
+        aria-label="Discord"
+      >
+        <i class="fa-brands fa-discord" aria-hidden="true"></i>
+      </a>
+    </div>
+    <div class="home-edge"><span>TOKYO / JAPAN</span><span>EST. 2022</span></div>
+  </main>
+</SiteLayout>
+
+<script>
+  import gsap from 'gsap';
+
+  const slides = gsap.utils.toArray<HTMLImageElement>('.hero-slide');
+  const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (slides.length) {
+    gsap.set(slides, { opacity: 0, xPercent: 100, zIndex: 0 });
+    gsap.set(slides[0], { opacity: 1, xPercent: 0, scale: 1.08, zIndex: 1 });
+
+    if (!reduceMotion && slides.length > 1) {
+      let current = 0;
+      gsap.to(slides[0], { scale: 1, duration: 4.1, ease: 'none' });
+
+      window.setInterval(() => {
+        const previous = slides[current];
+        current = (current + 1) % slides.length;
+        const next = slides[current];
+
+        previous.setAttribute('aria-hidden', 'true');
+        next.setAttribute('aria-hidden', 'false');
+
+        gsap
+          .timeline()
+          .set(next, { opacity: 1, xPercent: 100, scale: 1.08, zIndex: 2 })
+          .to(previous, { xPercent: -100, duration: 1.05, ease: 'power3.inOut' }, 0)
+          .to(next, { xPercent: 0, duration: 1.05, ease: 'power3.inOut' }, 0)
+          .set(previous, { opacity: 0, xPercent: 100, zIndex: 0 })
+          .set(next, { zIndex: 1 })
+          .to(next, { scale: 1, duration: 4.1, ease: 'none' });
+      }, 5200);
+    }
+  }
+</script>

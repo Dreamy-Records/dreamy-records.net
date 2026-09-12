@@ -1,0 +1,13 @@
+---
+import { legacyRedirects } from '../data/legacyRedirects';
+
+export function getStaticPaths() {
+  return legacyRedirects.map(({ source, destination }) => ({
+    params: { legacy: source.replace(/^\/|\/$/g, '') },
+    props: { destination },
+  }));
+}
+
+const { destination } = Astro.props;
+return Astro.redirect(destination, 301);
+---

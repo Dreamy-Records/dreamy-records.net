@@ -1,0 +1,102 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+---
+
+<SiteLayout title="Contact — Dreamy Records" page="contact">
+  <main class="page-shell dark-page contact-page">
+    <header class="page-title"><span>07 / CONTACT</span><h1>CONTACT</h1><p>お問い合わせ</p></header>
+    <section class="contact-layout">
+      <div class="contact-copy contact-reveal">
+        <span>GET IN TOUCH</span>
+        <h2>LET'S<br />TALK.</h2>
+        <p>
+          楽曲制作、出演、作品のお取り扱い、その他のお問い合わせは、こちらのフォームからご連絡ください。
+        </p>
+        <a href="mailto:contact@dreamy-records.net">contact@dreamy-records.net ↗</a>
+      </div>
+
+      <form
+        class="contact-form contact-reveal"
+        action="https://ssgform.com/s/1CVLISU20KLI"
+        method="post"
+        accept-charset="UTF-8"
+      >
+        <div class="contact-honeypot" aria-hidden="true">
+          <label for="contact-wana">この項目は入力しないでください</label>
+          <input id="contact-wana" type="text" name="wana" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <label for="contact-name">
+          <span>NAME / お名前 <b>REQUIRED</b></span>
+          <input
+            id="contact-name"
+            type="text"
+            name="お名前"
+            autocomplete="name"
+            placeholder="お名前を入力してください"
+            required
+          />
+        </label>
+
+        <label for="contact-email">
+          <span>EMAIL / メールアドレス <b>REQUIRED</b></span>
+          <input
+            id="contact-email"
+            type="email"
+            name="メールアドレス"
+            autocomplete="email"
+            inputmode="email"
+            placeholder="example@dreamy-records.net"
+            required
+          />
+        </label>
+
+        <label for="contact-type">
+          <span>TYPE / お問い合わせ種別 <b>REQUIRED</b></span>
+          <select id="contact-type" name="お問い合わせ種別" required>
+            <option value="" selected disabled>選択してください</option>
+            <option value="楽曲制作">楽曲制作</option>
+            <option value="出演依頼">出演依頼</option>
+            <option value="作品のお取り扱い">作品のお取り扱い</option>
+            <option value="その他">その他</option>
+          </select>
+        </label>
+
+        <label for="contact-subject">
+          <span>SUBJECT / 件名 <b>REQUIRED</b></span>
+          <input
+            id="contact-subject"
+            type="text"
+            name="件名"
+            placeholder="件名を入力してください"
+            required
+          />
+        </label>
+
+        <label for="contact-message">
+          <span>MESSAGE / お問い合わせ内容 <b>REQUIRED</b></span>
+          <textarea
+            id="contact-message"
+            name="お問い合わせ内容"
+            rows="8"
+            placeholder="お問い合わせ内容を入力してください"
+            required></textarea>
+        </label>
+
+        <label class="privacy-check" for="contact-confirm">
+          <input
+            id="contact-confirm"
+            type="checkbox"
+            name="入力内容の確認"
+            value="確認済み"
+            required
+          />
+          <span>入力内容を確認しました。</span>
+        </label>
+
+        <button type="submit"><span>SEND MESSAGE</span><span>送信する →</span></button>
+        <p class="contact-note">通常3日以内に返信いたします。</p>
+      </form>
+    </section>
+  </main>
+</SiteLayout>
