@@ -23,7 +23,10 @@ const repeatedName = Array.from({ length: 7 }, () => member.nameEn);
       </div>
     </div>
     <div class="profile-content">
-      <a class="profile-back profile-reveal" href="/members/">← ALL MEMBERS</a>
+      <a class="profile-back profile-reveal icon-action" href="/members/">
+        <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+        <span>ALL MEMBERS</span>
+      </a>
       <section class="profile-hero">
         <div
           class:list={[
@@ -54,9 +57,11 @@ const repeatedName = Array.from({ length: 7 }, () => member.nameEn);
           <span>SOCIAL</span>{
             member.socials.length ? (
               member.socials.map((social) => (
-                <a href={social.href} target="_blank" rel="noreferrer">
-                  {social.label}
-                  <b>↗</b>
+                <a class="icon-action" href={social.href} target="_blank" rel="noreferrer">
+                  <span>{social.label}</span>
+                  <b>
+                    <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" />
+                  </b>
                 </a>
               ))
             ) : (
@@ -66,9 +71,14 @@ const repeatedName = Array.from({ length: 7 }, () => member.nameEn);
         </div>
       </section>
       <nav class="profile-pagination profile-reveal" aria-label="メンバープロフィール">
-        <a href={`/members/${prev.slug}/`}><small>PREVIOUS</small><span>← {prev.name}</span></a><a
-          href={`/members/${next.slug}/`}><small>NEXT</small><span>{next.name} →</span></a
-        >
+        <a class="icon-action" href={`/members/${prev.slug}/`}>
+          <small>PREVIOUS</small>
+          <span><i class="fa-solid fa-arrow-left" aria-hidden="true"></i>{prev.name}</span>
+        </a>
+        <a class="icon-action" href={`/members/${next.slug}/`}>
+          <small>NEXT</small>
+          <span>{next.name}<i class="fa-solid fa-arrow-right" aria-hidden="true"></i></span>
+        </a>
       </nav>
     </div>
   </main>

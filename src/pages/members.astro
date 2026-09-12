@@ -19,7 +19,10 @@ import { members } from '../data/members';
                 ) : (
                   <span>{member.nameEn.slice(0, 1)}</span>
                 )}
-                <i>VIEW PROFILE ↗</i>
+                <span class="member-profile-button">
+                  VIEW PROFILE
+                  <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" />
+                </span>
               </div>
               <p>{member.role}</p>
               <h2>{member.name}</h2>

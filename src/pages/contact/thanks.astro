@@ -20,8 +20,13 @@ import SiteLayout from '../../layouts/SiteLayout.astro';
       <h2>お問い合わせを<br />受け付けました。</h2>
       <p>送信いただきありがとうございます。内容を確認のうえ、通常3日以内にご連絡いたします。</p>
       <div class="thanks-actions">
-        <a href="/">BACK TO HOME <i aria-hidden="true">→</i></a>
-        <a href="/contact/">CONTACT <i aria-hidden="true">↗</i></a>
+        <a class="icon-action" href="/">
+          <span>BACK TO HOME</span><i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </a>
+        <a class="icon-action" href="/contact/">
+          <span>CONTACT</span>
+          <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+        </a>
       </div>
     </section>
   </main>

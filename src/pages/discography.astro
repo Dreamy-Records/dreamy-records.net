@@ -73,7 +73,9 @@ const releases = [
 
     <section class="coverflow" aria-label="アルバムを選択">
       <div class="coverflow-stage">
-        <button class="flow-prev flow-side-arrow" type="button" aria-label="前の作品">←</button>
+        <button class="flow-prev flow-side-arrow" type="button" aria-label="前の作品">
+          <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+        </button>
         {
           releases.map((release, index) => (
             <div
@@ -91,14 +93,19 @@ const releases = [
             </div>
           ))
         }
-        <button class="flow-next flow-side-arrow" type="button" aria-label="次の作品">→</button>
+        <button class="flow-next flow-side-arrow" type="button" aria-label="次の作品">
+          <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        </button>
       </div>
 
       <div class="flow-controls">
         <div class="flow-info">
           <small id="flow-code">{releases[0].code} / {releases[0].year}</small>
           <h2 id="flow-title">{releases[0].title}</h2>
-          <a class="flow-release-button" id="flow-link" href={releases[0].link}>VIEW RELEASE ↗</a>
+          <a class="flow-release-button icon-action" id="flow-link" href={releases[0].link}>
+            <span>VIEW RELEASE</span>
+            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+          </a>
         </div>
       </div>
 
@@ -124,7 +131,7 @@ const releases = [
             <span class="music-action">
               <>
                 <span>VIEW RELEASE</span>
-                <i aria-hidden="true">↗</i>
+                <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" />
               </>
             </span>
           </a>
