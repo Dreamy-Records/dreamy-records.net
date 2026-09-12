@@ -233,7 +233,7 @@ const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
               },
             );
           animateIfPresent(
-            '.hero-content > *',
+            '.hero-content > :not(.hero-catchphrase)',
             { y: 36, opacity: 0 },
             {
               y: 0,

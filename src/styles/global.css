@@ -296,7 +296,7 @@ img {
   bottom: 11vh;
   width: 75vw;
 }
-.js:not(.home-animation-ready) .home .hero-content > *,
+.js:not(.home-animation-ready) .home .hero-content > :not(.hero-catchphrase),
 .js:not(.home-animation-ready) .home .socials a {
   opacity: 0;
 }
@@ -945,6 +945,78 @@ img {
   font-size: clamp(3rem, 6vw, 6.5rem);
   line-height: 0.82;
   letter-spacing: -0.06em;
+}
+.hero-catchphrase-line {
+  position: relative;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin-left: 0 !important;
+  overflow: hidden;
+  isolation: isolate;
+}
+.hero-catchphrase-text {
+  display: block;
+  opacity: 0;
+  animation: hero-catchphrase-reveal 0.01s 0.83s forwards;
+}
+.hero-catchphrase-line::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: #fff;
+  transform: scaleX(0);
+  pointer-events: none;
+  animation: hero-catchphrase-wipe 1s 0.33s cubic-bezier(0.77, 0, 0.18, 1) both;
+}
+.hero-catchphrase-line-beyond::after {
+  animation-duration: 1s;
+}
+.hero-catchphrase-line-the::after {
+  animation-duration: 0.86s;
+}
+.hero-catchphrase-line-the .hero-catchphrase-text {
+  animation-delay: 0.76s;
+}
+.hero-catchphrase-line-dream::after {
+  animation-duration: 1.12s;
+}
+.hero-catchphrase-line-dream .hero-catchphrase-text {
+  animation-delay: 0.89s;
+}
+@keyframes hero-catchphrase-wipe {
+  0% {
+    transform: scaleX(0);
+    transform-origin: right;
+  }
+  50% {
+    transform: scaleX(1);
+    transform-origin: right;
+  }
+  50.01% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  100% {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+}
+@keyframes hero-catchphrase-reveal {
+  to {
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-catchphrase-text {
+    opacity: 1;
+    animation: none;
+  }
+  .hero-catchphrase-line::after {
+    display: none;
+    animation: none;
+  }
 }
 @media (max-width: 760px) {
   .home .hero-content {
