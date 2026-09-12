@@ -11,6 +11,7 @@ const defaultOgImage = '/assets/news/19-Dreamy-Records-header-1.png';
 const ogImageBase = import.meta.env.DEV ? Astro.url.origin : Astro.site;
 const ogImage = new URL(image || defaultOgImage, ogImageBase).href;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
+const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
 ---
 
 <!doctype html>
@@ -19,7 +20,7 @@ const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
     ><meta charset="UTF-8" /><meta name="viewport" content="width=device-width" /><meta
       name="description"
       content={description}
-    /><link
+    />{isStaging && <meta name="robots" content="noindex, nofollow, noarchive" />}<link
       rel="alternate"
       type="application/rss+xml"
       title="Dreamy Records NEWS"
