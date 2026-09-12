@@ -54,16 +54,6 @@ export const members: Member[] = [
     ],
   },
   {
-    slug: 'masachin',
-    name: 'まさちん',
-    nameEn: 'MASACHIN',
-    role: '編曲',
-    bio: [
-      '千葉県出身\n中学生の頃にニコ動で東方projectと出会う。そこから東方projectの音楽の世界の虜になる。\nDreamy Recordsでは編曲を務める。\n最年少でわからない事だらけですがどうぞ宜しくお願いします🙏'
-    ],
-    socials: [],
-  },
-  {
     slug: 'reeka',
     name: 'れーか',
     nameEn: 'REEKA',

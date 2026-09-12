@@ -1067,6 +1067,42 @@ img {
   overflow: hidden;
   padding-bottom: 20px;
 }
+.coverflow-page.is-list-view {
+  height: auto;
+  min-height: 100svh;
+  overflow: visible;
+  padding-bottom: 120px;
+}
+.music-view-switch {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin: 0 0 20px;
+}
+.music-view-switch button {
+  min-width: 112px;
+  padding: 11px 14px;
+  border: 1px solid #555;
+  background: transparent;
+  color: #aaa;
+  font: inherit;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  cursor: pointer;
+}
+.music-view-switch button[aria-pressed='true'] {
+  border-color: #fff;
+  background: #fff;
+  color: #000;
+}
+.music-list-view[hidden],
+.coverflow[hidden] {
+  display: none;
+}
+.music-list-view {
+  margin-top: 25px;
+}
 .compact-title {
   margin-bottom: 15px;
   padding-bottom: 18px;
@@ -1100,7 +1136,7 @@ img {
   border: 0;
   padding: 0;
   background: #111;
-  cursor: pointer;
+  cursor: default;
   transform-style: preserve-3d;
   will-change: transform, opacity;
   box-shadow: 0 25px 70px #000;
@@ -1109,9 +1145,6 @@ img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-.flow-cover.active {
-  cursor: default;
 }
 .reflection {
   position: absolute;
@@ -1505,26 +1538,21 @@ img {
   .coverflow-stage {
     height: 62%;
     padding-top: 28px;
+    transform: translateY(-32px);
   }
   .flow-cover {
     width: min(27vw, 350px);
   }
   .flow-controls {
-    bottom: 7%;
+    bottom: 18%;
   }
 }
 
 .coverflow-stage {
-  touch-action: pan-y;
+  touch-action: auto;
   user-select: none;
   -webkit-user-select: none;
-  cursor: grab;
-}
-.coverflow-stage.is-dragging {
-  cursor: grabbing;
-}
-.coverflow-stage.is-dragging .flow-cover {
-  pointer-events: none !important;
+  cursor: default;
 }
 .flow-side-arrow {
   position: absolute;
@@ -1550,7 +1578,7 @@ img {
   pointer-events: none;
 }
 .flow-cover {
-  touch-action: none;
+  touch-action: auto;
 }
 @media (max-width: 760px) {
   .flow-side-arrow.flow-prev {
@@ -1570,8 +1598,7 @@ img {
   }
 }
 
-.coverflow-stage,
-.coverflow-stage.is-dragging {
+.coverflow-stage {
   cursor: default;
 }
 
