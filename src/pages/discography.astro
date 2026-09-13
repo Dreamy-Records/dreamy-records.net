@@ -154,7 +154,12 @@ const releases = [
     const current = document.querySelector('#flow-current');
     const flowLink = document.querySelector<HTMLAnchorElement>('#flow-link');
     const mobileView = window.matchMedia('(max-width: 760px)');
-    let active = 0;
+    const activeReleaseKey = 'dreamy-records-active-release';
+    const savedActive = Number.parseInt(sessionStorage.getItem(activeReleaseKey) ?? '', 10);
+    let active =
+      Number.isInteger(savedActive) && savedActive >= 0 && savedActive < covers.length
+        ? savedActive
+        : 0;
 
     const spacing = () => Math.min(210, window.innerWidth * 0.28);
 
@@ -194,6 +199,7 @@ const releases = [
       if (code) code.textContent = `${selected.dataset.code} / ${selected.dataset.year}`;
       if (current) current.textContent = String(active + 1).padStart(2, '0');
       if (flowLink) flowLink.href = selected.dataset.link || '#';
+      sessionStorage.setItem(activeReleaseKey, String(active));
     };
 
     const previous = () => {
