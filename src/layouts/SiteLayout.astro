@@ -26,7 +26,10 @@ const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
       type="application/rss+xml"
       title="Dreamy Records NEWS"
       href="/rss.xml"
-    /><link rel="canonical" href={canonicalUrl} /><meta property="og:title" content={title} /><meta
+    /><link rel="icon" type="image/png" href="/assets/favicon.png" /><link
+      rel="canonical"
+      href={canonicalUrl}
+    /><meta property="og:title" content={title} /><meta
       property="og:description"
       content={description}
     /><meta property="og:type" content={page === 'news-detail' ? 'article' : 'website'} /><meta
