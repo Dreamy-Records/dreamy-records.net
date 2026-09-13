@@ -106,7 +106,6 @@ const repeatedName = Array.from({ length: 7 }, () => member.nameEn);
     gsap.set(reveals, { opacity: 1, clearProps: 'transform,filter,clipPath' });
     finishIntro();
   } else {
-    document.body.style.overflow = 'hidden';
     gsap.set(reveals, { opacity: 0 });
 
     const timeline = gsap.timeline({ defaults: { ease: 'power3.out' } });

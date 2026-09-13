@@ -399,6 +399,7 @@ img {
   line-height: 0.73;
   letter-spacing: -0.085em;
   margin: 35px 0 0;
+  white-space: nowrap;
 }
 .page-title p {
   position: absolute;
@@ -514,6 +515,7 @@ img {
   font-family: 'Noto Sans JP';
   font-size: 18px;
   margin: 10px 0;
+  white-space: nowrap;
 }
 .release-grid {
   display: grid;
@@ -1337,10 +1339,11 @@ img {
 }
 .article-head h1 {
   font-family: 'Noto Sans JP';
-  font-size: clamp(2.3rem, 5vw, 5.5rem);
+  font-size: min(var(--article-title-vw, 5vw), var(--article-title-rem, 5.5rem));
   line-height: 1.25;
   letter-spacing: -0.04em;
   margin: 38px 0 24px;
+  white-space: nowrap;
 }
 .article-image {
   width: 100%;
@@ -1356,10 +1359,32 @@ img {
   line-height: 2.1;
 }
 .article-body h2 {
-  font-size: 26px;
-  margin: 65px 0 20px;
-  padding-bottom: 14px;
+  margin: 70px 0 24px;
+  padding: 12px 0 12px 18px;
+  border-left: 3px solid #fff;
   border-bottom: 1px solid #555;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 1.5;
+  letter-spacing: 0.02em;
+}
+.article-body h3 {
+  position: relative;
+  margin: 48px 0 18px;
+  padding-left: 24px;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+}
+.article-body h3::before {
+  content: '';
+  position: absolute;
+  top: 0.8em;
+  left: 0;
+  width: 14px;
+  height: 1px;
+  background: #fff;
 }
 .article-body p {
   margin: 0 0 28px;
@@ -1492,7 +1517,6 @@ img {
     margin-top: 40px;
   }
   .article-head h1 {
-    font-size: 9vw;
     margin-top: 28px;
   }
   .article-body {
@@ -1505,8 +1529,14 @@ img {
     margin: 40px auto;
   }
   .article-body h2 {
-    font-size: 20px;
+    padding: 10px 0 10px 14px;
+    font-size: 19px;
     margin-top: 45px;
+  }
+  .article-body h3 {
+    margin-top: 36px;
+    padding-left: 20px;
+    font-size: 16px;
   }
   .article-share {
     margin-top: 50px;
@@ -2111,7 +2141,7 @@ img {
 }
 .thanks-content {
   width: min(760px, 100%);
-  margin-left: auto;
+  margin-inline: auto;
   padding: clamp(45px, 8vw, 100px) 0 30px;
   border-top: 1px solid #333;
 }
@@ -2160,7 +2190,7 @@ img {
 }
 @media (max-width: 760px) {
   .thanks-content {
-    margin: 0;
+    margin-inline: auto;
     padding-top: 45px;
   }
   .thanks-content h2 {
@@ -2511,11 +2541,13 @@ img {
   line-height: 1.12;
   letter-spacing: -0.06em;
   margin: 28px 0 18px;
+  white-space: nowrap;
 }
 .profile-heading > strong {
   font-size: clamp(1.2rem, 2.5vw, 2.8rem);
   letter-spacing: 0.08em;
   color: #555;
+  white-space: nowrap;
 }
 .profile-body {
   display: grid;
@@ -2590,6 +2622,7 @@ img {
   font-family: 'Noto Sans JP';
   font-size: 18px;
   font-weight: 700;
+  white-space: nowrap;
 }
 .profile-pagination > a:hover small,
 .profile-pagination > a:focus-visible small {
@@ -2606,11 +2639,12 @@ img {
     align-items: initial;
   }
   .profile-heading h1 {
-    font-size: 13vw;
+    font-size: 10vw;
     margin: 20px 0 10px;
   }
   .profile-heading > strong {
-    font-size: 5vw;
+    font-size: clamp(0.8rem, 3.5vw, 1.3rem);
+    letter-spacing: 0.04em;
   }
   .profile-body {
     grid-template-columns: 1fr;
@@ -2636,6 +2670,9 @@ img {
   }
   .member-profile-button {
     display: none;
+  }
+  .member h2 {
+    font-size: clamp(10px, 3vw, 18px);
   }
   .avatar-fallback span {
     font-size: 20vw;
@@ -2806,7 +2843,7 @@ img {
 }
 .legal-content {
   width: min(820px, 100%);
-  margin-left: auto;
+  margin-inline: auto;
 }
 .legal-content section {
   padding: 34px 0;
@@ -2831,7 +2868,7 @@ img {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   width: min(1100px, 100%);
-  margin-left: auto;
+  margin-inline: auto;
   border-top: 1px solid #444;
 }
 .sitemap-links a {
@@ -2872,11 +2909,11 @@ img {
     font-size: 8px;
   }
   .legal-content {
-    margin-left: 0;
+    margin-inline: auto;
   }
   .sitemap-links {
     grid-template-columns: 1fr;
-    margin-left: 0;
+    margin-inline: auto;
   }
   .sitemap-links a,
   .sitemap-links a:nth-child(even) {
