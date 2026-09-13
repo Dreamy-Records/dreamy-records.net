@@ -2915,6 +2915,10 @@ img {
   font-style: normal;
 }
 @media (max-width: 760px) {
+  .legal-page .page-title h1 {
+    font-size: 11vw;
+    letter-spacing: -0.07em;
+  }
   .site-footer {
     padding: 28px 20px;
   }
