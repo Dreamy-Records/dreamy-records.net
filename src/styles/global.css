@@ -1978,7 +1978,7 @@ img {
   height: 1px;
   overflow: hidden;
 }
-.contact-form > label:not(.privacy-check) {
+.contact-input-step > label {
   display: block;
   border-bottom: 1px solid #555;
   padding: 24px 0;
@@ -2020,22 +2020,8 @@ img {
 .contact-form textarea::placeholder {
   color: #999;
 }
-.contact-form > label:not(.privacy-check):focus-within {
+.contact-input-step > label:focus-within {
   border-color: #fff;
-}
-.privacy-check {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin: 24px 0;
-}
-.privacy-check input {
-  width: 15px;
-  height: 15px;
-}
-.privacy-check span {
-  margin: 0 !important;
-  color: #999;
 }
 .contact-form button {
   width: 100%;
@@ -2051,6 +2037,55 @@ img {
   cursor: pointer;
   transition: 0.25s;
 }
+.contact-confirm-button {
+  margin-top: 24px;
+}
+.contact-confirm-step[hidden],
+.contact-input-step[hidden] {
+  display: none;
+}
+.contact-confirm-step {
+  padding-top: 28px;
+  outline: none;
+}
+.contact-confirm-step > span {
+  font-size: 8px;
+  letter-spacing: 0.18em;
+  color: #aaa;
+}
+.contact-confirm-step h2 {
+  margin: 14px 0 28px;
+  font-family: 'Noto Sans JP';
+  font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+}
+.contact-confirm-step dl {
+  margin: 0 0 28px;
+  border-top: 1px solid #555;
+}
+.contact-confirm-step dl > div {
+  padding: 20px 0;
+  border-bottom: 1px solid #555;
+}
+.contact-confirm-step dt {
+  margin-bottom: 10px;
+  color: #aaa;
+  font-size: 8px;
+  letter-spacing: 0.17em;
+}
+.contact-confirm-step dd {
+  margin: 0;
+  color: #fff;
+  font-family: 'Noto Sans JP';
+  font-size: 14px;
+  line-height: 1.8;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+.contact-confirm-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
 .contact-form button:hover {
   border-color: #fff;
   background: #fff;
@@ -2065,6 +2100,11 @@ img {
   color: #aaa;
   font-family: 'Noto Sans JP';
   font-size: 10px;
+}
+@media (max-width: 760px) {
+  .contact-confirm-actions {
+    grid-template-columns: 1fr;
+  }
 }
 .thanks-page {
   min-height: 100svh;

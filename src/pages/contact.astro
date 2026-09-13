@@ -26,80 +26,138 @@ import SiteLayout from '../layouts/SiteLayout.astro';
           <input id="contact-wana" type="text" name="wana" tabindex="-1" autocomplete="off" />
         </div>
 
-        <label for="contact-name">
-          <span>NAME / お名前 <b>REQUIRED</b></span>
-          <input
-            id="contact-name"
-            type="text"
-            name="お名前"
-            autocomplete="name"
-            placeholder="お名前を入力してください"
-            required
-          />
-        </label>
+        <div class="contact-input-step">
+          <label for="contact-name">
+            <span>NAME / お名前 <b>REQUIRED</b></span>
+            <input
+              id="contact-name"
+              type="text"
+              name="お名前"
+              autocomplete="name"
+              placeholder="お名前を入力してください"
+              required
+            />
+          </label>
 
-        <label for="contact-email">
-          <span>EMAIL / メールアドレス <b>REQUIRED</b></span>
-          <input
-            id="contact-email"
-            type="email"
-            name="メールアドレス"
-            autocomplete="email"
-            inputmode="email"
-            placeholder="example@dreamy-records.net"
-            required
-          />
-        </label>
+          <label for="contact-email">
+            <span>EMAIL / メールアドレス <b>REQUIRED</b></span>
+            <input
+              id="contact-email"
+              type="email"
+              name="メールアドレス"
+              autocomplete="email"
+              inputmode="email"
+              placeholder="example@dreamy-records.net"
+              required
+            />
+          </label>
 
-        <label for="contact-type">
-          <span>TYPE / お問い合わせ種別 <b>REQUIRED</b></span>
-          <select id="contact-type" name="お問い合わせ種別" required>
-            <option value="" selected disabled>選択してください</option>
-            <option value="楽曲制作">楽曲制作</option>
-            <option value="出演依頼">出演依頼</option>
-            <option value="作品のお取り扱い">作品のお取り扱い</option>
-            <option value="その他">その他</option>
-          </select>
-        </label>
+          <label for="contact-type">
+            <span>TYPE / お問い合わせ種別 <b>REQUIRED</b></span>
+            <select id="contact-type" name="お問い合わせ種別" required>
+              <option value="" selected disabled>選択してください</option>
+              <option value="楽曲制作">楽曲制作</option>
+              <option value="出演依頼">出演依頼</option>
+              <option value="作品のお取り扱い">作品のお取り扱い</option>
+              <option value="その他">その他</option>
+            </select>
+          </label>
 
-        <label for="contact-subject">
-          <span>SUBJECT / 件名 <b>REQUIRED</b></span>
-          <input
-            id="contact-subject"
-            type="text"
-            name="件名"
-            placeholder="件名を入力してください"
-            required
-          />
-        </label>
+          <label for="contact-subject">
+            <span>SUBJECT / 件名 <b>REQUIRED</b></span>
+            <input
+              id="contact-subject"
+              type="text"
+              name="件名"
+              placeholder="件名を入力してください"
+              required
+            />
+          </label>
 
-        <label for="contact-message">
-          <span>MESSAGE / お問い合わせ内容 <b>REQUIRED</b></span>
-          <textarea
-            id="contact-message"
-            name="お問い合わせ内容"
-            rows="8"
-            placeholder="お問い合わせ内容を入力してください"
-            required></textarea>
-        </label>
+          <label for="contact-message">
+            <span>MESSAGE / お問い合わせ内容 <b>REQUIRED</b></span>
+            <textarea
+              id="contact-message"
+              name="お問い合わせ内容"
+              rows="8"
+              placeholder="お問い合わせ内容を入力してください"
+              required></textarea>
+          </label>
 
-        <label class="privacy-check" for="contact-confirm">
-          <input
-            id="contact-confirm"
-            type="checkbox"
-            name="入力内容の確認"
-            value="確認済み"
-            required
-          />
-          <span>入力内容を確認しました。</span>
-        </label>
+          <button class="icon-action contact-confirm-button" type="button">
+            <span>入力内容を確認する</span>
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+          </button>
+          <p class="contact-note">通常3日以内に返信いたします。</p>
+        </div>
 
-        <button class="icon-action" type="submit">
-          <span>SEND MESSAGE</span>
-          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
-        </button>
-        <p class="contact-note">通常3日以内に返信いたします。</p>
+        <section
+          class="contact-confirm-step"
+          aria-labelledby="contact-confirm-title"
+          tabindex="-1"
+          hidden
+        >
+          <span>CONFIRM YOUR MESSAGE</span>
+          <h2 id="contact-confirm-title">入力内容の確認</h2>
+          <dl>
+            <div><dt>NAME / お名前</dt><dd data-confirm="contact-name"></dd></div>
+            <div><dt>EMAIL / メールアドレス</dt><dd data-confirm="contact-email"></dd></div>
+            <div><dt>TYPE / お問い合わせ種別</dt><dd data-confirm="contact-type"></dd></div>
+            <div><dt>SUBJECT / 件名</dt><dd data-confirm="contact-subject"></dd></div>
+            <div><dt>MESSAGE / お問い合わせ内容</dt><dd data-confirm="contact-message"></dd></div>
+          </dl>
+          <div class="contact-confirm-actions">
+            <button class="icon-action contact-edit-button" type="button">
+              <i class="fa-solid fa-arrow-left" aria-hidden="true"></i>
+              <span>戻って修正する</span>
+            </button>
+            <button class="icon-action" type="submit">
+              <span>送信する</span>
+              <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+            </button>
+          </div>
+        </section>
       </form>
     </section>
   </main>
 </SiteLayout>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('.contact-form');
+  const inputStep = form?.querySelector<HTMLElement>('.contact-input-step');
+  const confirmStep = form?.querySelector<HTMLElement>('.contact-confirm-step');
+  const confirmButton = form?.querySelector<HTMLButtonElement>('.contact-confirm-button');
+  const editButton = form?.querySelector<HTMLButtonElement>('.contact-edit-button');
+
+  const showInputStep = () => {
+    if (!inputStep || !confirmStep) return;
+    confirmStep.hidden = true;
+    inputStep.hidden = false;
+    inputStep.querySelector<HTMLElement>('input, select, textarea')?.focus();
+  };
+
+  const showConfirmStep = () => {
+    if (!form || !inputStep || !confirmStep || !form.reportValidity()) return;
+
+    confirmStep.querySelectorAll<HTMLElement>('[data-confirm]').forEach((output) => {
+      const field = form.elements.namedItem(
+        form.querySelector<HTMLElement>(`#${output.dataset.confirm}`)?.getAttribute('name') || '',
+      ) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement | null;
+      output.textContent = field?.value || '';
+    });
+
+    inputStep.hidden = true;
+    confirmStep.hidden = false;
+    confirmStep.focus({ preventScroll: true });
+    confirmStep.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
+  confirmButton?.addEventListener('click', showConfirmStep);
+  editButton?.addEventListener('click', showInputStep);
+  form?.addEventListener('submit', (event) => {
+    if (confirmStep?.hidden) {
+      event.preventDefault();
+      showConfirmStep();
+    }
+  });
+</script>
