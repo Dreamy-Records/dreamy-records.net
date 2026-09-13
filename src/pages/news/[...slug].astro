@@ -13,9 +13,6 @@ const date = entry.data.date
   .toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })
   .replaceAll('/', '.');
 const articleTitle = entry.data.title;
-const articleTitleLength = Array.from(articleTitle).length;
-const articleTitleVw = Math.min(5, 88 / articleTitleLength);
-const articleTitleRem = Math.min(5.5, 58 / articleTitleLength);
 const articleUrl = new URL(Astro.url.pathname, Astro.site).href;
 const xShareUrl = `https://x.com/intent/post?${new URLSearchParams({
   text: articleTitle,
@@ -39,11 +36,7 @@ const xShareUrl = `https://x.com/intent/post?${new URLSearchParams({
             >{entry.data.category}</span
           >
         </div>
-        <h1
-          style={`--article-title-vw: ${articleTitleVw}vw; --article-title-rem: ${articleTitleRem}rem;`}
-        >
-          {entry.data.title}
-        </h1>
+        <h1>{entry.data.title}</h1>
       </header>
       {
         entry.data.image && entry.data.showImage && (

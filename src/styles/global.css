@@ -793,10 +793,19 @@ img {
   min-height: 135px;
   border-bottom: 1px solid #444;
   transition: 0.3s;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
-.news-row:hover {
-  padding-left: 18px;
-  background: #101010;
+@media (hover: hover) and (pointer: fine) {
+  .news-row:hover {
+    padding-left: 18px;
+    background: #101010;
+  }
+}
+@media (hover: none), (pointer: coarse) {
+  .news-row:active {
+    background: #181818;
+  }
 }
 .news-row .news-index,
 .news-row time,
@@ -1065,10 +1074,10 @@ img {
   }
 }
 .coverflow-page {
-  height: 100svh;
-  min-height: 720px;
-  overflow: hidden;
-  padding-bottom: 20px;
+  height: auto;
+  min-height: 100svh;
+  overflow: visible;
+  padding-bottom: 100px;
 }
 .coverflow-page.is-list-view {
   height: auto;
@@ -1118,8 +1127,9 @@ img {
   bottom: 20px;
 }
 .coverflow {
-  height: calc(100svh - 300px);
-  min-height: 430px;
+  height: max(calc(100svh - 300px), 620px);
+  min-height: 620px;
+  margin-top: clamp(12px, 2vh, 24px);
   position: relative;
   perspective: 1300px;
   overflow: hidden;
@@ -1242,7 +1252,7 @@ img {
 @media (max-width: 760px) {
   .coverflow-page {
     min-height: 650px;
-    padding-bottom: 10px;
+    padding-bottom: 70px;
   }
   .compact-title {
     margin-bottom: 5px;
@@ -1251,8 +1261,9 @@ img {
     font-size: 14vw;
   }
   .coverflow {
-    height: calc(100svh - 230px);
-    min-height: 410px;
+    height: max(calc(100svh - 230px), 500px);
+    min-height: 500px;
+    margin-top: 10px;
   }
   .coverflow-stage {
     height: 60%;
@@ -1261,7 +1272,7 @@ img {
     width: min(58vw, 280px);
   }
   .flow-controls {
-    bottom: 30%;
+    bottom: 4%;
     width: 100%;
     grid-template-columns: 42px 1fr 42px;
   }
@@ -1339,11 +1350,12 @@ img {
 }
 .article-head h1 {
   font-family: 'Noto Sans JP';
-  font-size: min(var(--article-title-vw, 5vw), var(--article-title-rem, 5.5rem));
+  font-size: clamp(2.3rem, 5vw, 5.5rem);
   line-height: 1.25;
   letter-spacing: -0.04em;
   margin: 38px 0 24px;
-  white-space: nowrap;
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 .article-image {
   width: 100%;
@@ -1517,6 +1529,7 @@ img {
     margin-top: 40px;
   }
   .article-head h1 {
+    font-size: 9vw;
     margin-top: 28px;
   }
   .article-body {
@@ -1593,8 +1606,8 @@ img {
   }
   .coverflow-stage {
     height: 62%;
-    padding-top: 28px;
-    transform: translateY(-32px);
+    padding-top: 18px;
+    transform: none;
   }
   .flow-cover {
     width: min(27vw, 350px);
@@ -1637,6 +1650,10 @@ img {
   touch-action: auto;
 }
 @media (max-width: 760px) {
+  .flow-cover.active {
+    cursor: pointer;
+    touch-action: manipulation;
+  }
   .flow-side-arrow.flow-prev {
     left: 2px;
   }
@@ -1650,7 +1667,8 @@ img {
   }
   .flow-controls {
     width: 80%;
-    bottom: 30%;
+    top: 53%;
+    bottom: auto;
   }
 }
 
