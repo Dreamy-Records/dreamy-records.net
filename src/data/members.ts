@@ -94,7 +94,7 @@ export const members: Member[] = [
       { label: 'X / TWITTER', href: 'https://x.com/kudaken0/' },
       { label: 'INSTAGRAM', href: 'https://www.instagram.com/kudaken0/' },
       { label: 'YOUTUBE', href: 'https://youtube.com/kudaken' },
-      { label: 'GITHUB', href: 'https://github.com/kudaken' },
+      { label: 'GITHUB', href: 'https://github.com/kudaken0' },
       { label: 'BLUESKY', href: 'https://bsky.app/profile/kudaken.com' },
     ],
   },
