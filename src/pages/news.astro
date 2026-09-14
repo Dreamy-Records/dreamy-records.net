@@ -49,12 +49,13 @@ const categories = [...new Set(news.map((item) => item.data.category))].sort((a,
       {
         news.map((item, i) => (
           <a
-            href={`/news/${item.id}/`}
+            href={item.data.redirectTo ?? `/news/${item.id}/`}
             class="news-row"
             data-news-row
             data-year={item.data.date.getFullYear()}
             data-category={item.data.category}
             data-search={`${item.data.title} ${item.data.category} ${formatDate(item.data.date)}`}
+            aria-label={item.data.redirectTo ? `${item.data.title}（外部サイトへ移動）` : item.data.title}
           >
             <>
               <span class="news-index">{String(i + 1).padStart(2, '0')}</span>

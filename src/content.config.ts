@@ -10,6 +10,7 @@ const news = defineCollection({
     description: z.string(),
     image: z.string().optional(),
     showImage: z.boolean().default(false),
+    redirectTo: z.string().url().optional(),
   }),
 });
 
