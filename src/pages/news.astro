@@ -104,6 +104,10 @@ const categories = [...new Set(news.map((item) => item.data.category))].sort((a,
     searchInput?.addEventListener('input', updateNews);
     yearSelect?.addEventListener('change', updateNews);
     categorySelect?.addEventListener('change', updateNews);
+    filters?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      updateNews();
+    });
     filters?.addEventListener('reset', () => requestAnimationFrame(updateNews));
     updateNews();
   </script>
