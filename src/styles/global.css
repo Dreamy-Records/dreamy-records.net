@@ -1114,6 +1114,133 @@ img {
 .music-list-view {
   margin-top: 25px;
 }
+.media-page {
+  padding-bottom: 140px;
+}
+.media-view-switch {
+  margin-bottom: 44px;
+}
+.media-panel[hidden] {
+  display: none;
+}
+.media-panel {
+  width: min(760px, 100%);
+  margin-inline: auto;
+}
+.media-video-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 42px;
+}
+.media-video-card {
+  min-width: 0;
+}
+.media-video-frame {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #111;
+}
+.media-video-frame iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.media-video-card h2 {
+  margin: 14px 0 5px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: clamp(1rem, 1.6vw, 1.35rem);
+  line-height: 1.4;
+}
+.media-video-card p,
+.media-note {
+  margin: 0;
+  color: #c5c5c5;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+.media-note {
+  margin-bottom: 28px;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+}
+.wallpaper-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+.wallpaper-card {
+  position: relative;
+  display: block;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #444;
+  background: #080808;
+}
+.wallpaper-card img {
+  width: 100%;
+  height: clamp(220px, 30vw, 300px);
+  object-fit: contain;
+  background: #111;
+  transition: transform 0.35s ease;
+}
+.wallpaper-card:nth-child(n + 3) img {
+  aspect-ratio: auto;
+  object-position: center;
+}
+.wallpaper-card > span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+  border-top: 1px solid #444;
+}
+.wallpaper-card strong,
+.wallpaper-card small {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+}
+.wallpaper-card small {
+  color: #c5c5c5;
+}
+.wallpaper-card > i {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 1;
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  background: #050505cc;
+  font-size: 11px;
+}
+@media (hover: hover) and (pointer: fine) {
+  .wallpaper-card:hover img {
+    transform: scale(1.035);
+  }
+}
+@media (max-width: 760px) {
+  .media-page {
+    padding-bottom: 85px;
+  }
+  .media-view-switch {
+    justify-content: flex-start;
+    margin-bottom: 30px;
+  }
+  .media-view-switch button {
+    min-width: 0;
+    flex: 1;
+    padding-inline: 8px;
+  }
+  .media-video-grid {
+    gap: 34px;
+  }
+  .wallpaper-card img {
+    height: 320px;
+  }
+}
 .compact-title {
   margin-bottom: 15px;
   padding-bottom: 18px;

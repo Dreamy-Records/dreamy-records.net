@@ -1,0 +1,186 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const xfdVideos = [
+  { title: 'Summer Diary', videoId: 'W8YXCUVvB-A' },
+  { title: 'Dream Dance Floor.01', videoId: 'nyMHssysAxY' },
+  { title: 'Eclipse', videoId: '_swuvqZZkw4' },
+  { title: 'THE DREAMY RECORDS BEST5 COLLECTION', videoId: 'Xbn2MFLnUcs' },
+  { title: 'THE DREAMY RECORDS REMASTER COLLECTION', videoId: 'mzG2zHjHDpM' },
+  { title: 'Future Magic', videoId: 'cwp4YEXNPhg' },
+  { title: 'Forever Night', videoId: '0pld_Cc-gLU' },
+  { title: 'ALL DREAMBREAK REMIX', videoId: 'OhRFjc7UBTQ' },
+  { title: 'Planet World', videoId: '2qUjEhiK6wQ' },
+  { title: 'DREAMBREAK', videoId: 'WrKZfUu9CWY' },
+];
+
+const musicVideos = [
+  { title: 'Invisible at 3AM feat. まっすん', videoId: '3lbBi53cSZI' },
+  { title: '幽雅に咲かせ、黒染の桜 japanese Dream. ', videoId: 'o5cTX5hBZAc' },
+];
+
+const wallpapers = [
+  {
+    title: 'Desktop 01',
+    size: '1980 × 1080',
+    image: '/assets/news/135-Dreamy-Records-01-1024x559.png',
+  },
+  {
+    title: 'Desktop 02',
+    size: '1980 × 1080',
+    image: '/assets/news/135-Dreamy-Records-02-1024x559.png',
+  },
+  {
+    title: 'Mobile 01',
+    size: '1284 × 2778',
+    image: '/assets/news/135-Dreamy-Records-s-01-473x1024.png',
+  },
+  {
+    title: 'Mobile 02',
+    size: '1284 × 2778',
+    image: '/assets/news/135-Dreamy-Records-s-02-473x1024.png',
+  },
+];
+---
+
+<SiteLayout title="Media — Dreamy Records" page="media">
+  <main class="page-shell dark-page media-page">
+    <header class="page-title">
+      <span>07 / MEDIA</span>
+      <h1>MEDIA</h1>
+      <p>動画・壁紙</p>
+    </header>
+
+    <div class="music-view-switch media-view-switch" role="tablist" aria-label="メディア種別">
+      <button
+        type="button"
+        id="media-tab-xfd"
+        role="tab"
+        aria-controls="media-panel-xfd"
+        aria-selected="true"
+        aria-pressed="true"
+        data-media-tab="xfd">XFD</button
+      >
+      <button
+        type="button"
+        id="media-tab-mv"
+        role="tab"
+        aria-controls="media-panel-mv"
+        aria-selected="false"
+        aria-pressed="false"
+        data-media-tab="mv">MV</button
+      >
+      <button
+        type="button"
+        id="media-tab-wallpaper"
+        role="tab"
+        aria-controls="media-panel-wallpaper"
+        aria-selected="false"
+        aria-pressed="false"
+        data-media-tab="wallpaper">WALLPAPER</button
+      >
+    </div>
+
+    <section
+      class="media-panel profile-reveal"
+      id="media-panel-xfd"
+      role="tabpanel"
+      aria-labelledby="media-tab-xfd"
+    >
+      <div class="media-video-grid">
+        {
+          xfdVideos.map((video) => (
+            <article class="media-video-card">
+              <div class="media-video-frame">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${video.videoId}`}
+                  title={`${video.title} XFD`}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                />
+              </div>
+              <h2>{video.title}</h2>
+              <p>XFD</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section
+      class="media-panel profile-reveal"
+      id="media-panel-mv"
+      role="tabpanel"
+      aria-labelledby="media-tab-mv"
+      hidden
+    >
+      <div class="media-video-grid">
+        {
+          musicVideos.map((video) => (
+            <article class="media-video-card">
+              <div class="media-video-frame">
+                <iframe
+                  src={`https://www.youtube-nocookie.com/embed/${video.videoId}`}
+                  title={`${video.title} MV`}
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerpolicy="strict-origin-when-cross-origin"
+                  allowfullscreen
+                />
+              </div>
+              <h2>{video.title}</h2>
+              <p>MUSIC VIDEO</p>
+            </article>
+          ))
+        }
+      </div>
+    </section>
+
+    <section
+      class="media-panel profile-reveal"
+      id="media-panel-wallpaper"
+      role="tabpanel"
+      aria-labelledby="media-tab-wallpaper"
+      hidden
+    >
+      <p class="media-note">
+        画像をタップまたはクリックして保存してください。加工・二次配布はご遠慮ください。
+      </p>
+      <div class="wallpaper-grid">
+        {
+          wallpapers.map((wallpaper) => (
+            <a class="wallpaper-card" href={wallpaper.image} download>
+              <img src={wallpaper.image} alt={`${wallpaper.title} 壁紙`} loading="lazy" />
+              <span>
+                <strong>{wallpaper.title}</strong>
+                <small>{wallpaper.size}</small>
+              </span>
+              <i class="fa-solid fa-download" aria-hidden="true" />
+            </a>
+          ))
+        }
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-media-tab]')];
+    const panels = [...document.querySelectorAll<HTMLElement>('.media-panel')];
+
+    const selectTab = (tab: HTMLButtonElement) => {
+      const selected = tab.dataset.mediaTab;
+      tabs.forEach((item) => {
+        const isSelected = item === tab;
+        item.setAttribute('aria-selected', String(isSelected));
+        item.setAttribute('aria-pressed', String(isSelected));
+      });
+      panels.forEach((panel) => {
+        panel.hidden = panel.id !== `media-panel-${selected}`;
+      });
+    };
+
+    tabs.forEach((tab) => tab.addEventListener('click', () => selectTab(tab)));
+  </script>
+</SiteLayout>

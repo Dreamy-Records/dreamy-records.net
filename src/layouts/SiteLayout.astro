@@ -61,35 +61,49 @@ const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
   >
   <body id="top" class={page ? 'inner-body' : 'home-body'}>
     <header class="header">
-      <a href="/" class="brand"><img src="/assets/logo.png" alt="Dreamy Records" /></a><nav
-        class="desktop-nav"
-        aria-label="メインナビゲーション"
-      >
-        <a href="/about/">ABOUT</a><a href="/news/">NEWS</a><a href="/members/">MEMBERS</a><a
-          href="/music/">MUSIC</a
-        ><a href="/events/">EVENTS</a><a href="/shop/">SHOP</a><a href="/contact/">CONTACT</a>
-      </nav><button
+      <a href="/" class="brand">
+        <img src="/assets/logo.png" alt="Dreamy Records" />
+      </a>
+      <nav class="desktop-nav" aria-label="メインナビゲーション">
+        <a href="/about/">ABOUT</a>
+        <a href="/news/">NEWS</a>
+        <a href="/members/">MEMBERS</a>
+        <a href="/music/">MUSIC</a>
+        <a href="/events/">EVENTS</a>
+        <a href="/shop/">SHOP</a>
+        <a href="/media/">MEDIA</a>
+        <a href="/contact/">CONTACT</a>
+      </nav>
+      <button
         class="menu-button"
         aria-expanded="false"
         aria-controls="global-menu"
-        aria-label="メニューを開く"><span>MENU</span><i></i><i></i><i></i></button
+        aria-label="メニューを開く"
       >
+        <span>MENU</span>
+        <i></i>
+        <i></i>
+        <i></i>
+      </button>
     </header>
     <div id="global-menu" class="global-menu" aria-hidden="true">
       <div class="menu-meta">
-        <span>DREAMY RECORDS</span><span>TOUHOU ARRANGE MUSIC CIRCLE</span>
-      </div><nav>
-        <a href="/about/"><small>01</small><strong>ABOUT</strong><span>サークルについて</span></a><a
-          href="/news/"><small>02</small><strong>NEWS</strong><span>最新情報</span></a
-        ><a href="/members/"><small>03</small><strong>MEMBERS</strong><span>メンバー紹介</span></a
-        ><a href="/music/"><small>04</small><strong>MUSIC</strong><span>作品一覧</span></a><a
-          href="/events/"><small>05</small><strong>EVENTS</strong><span>イベント情報</span></a
-        ><a href="/shop/"><small>06</small><strong>SHOP</strong><span>取扱ショップ</span></a><a
-          href="/contact/"><small>07</small><strong>CONTACT</strong><span>お問い合わせ</span></a
-        >
-      </nav><div class="menu-foot">
-        <a href="https://x.com/dreamy_records" target="_blank" rel="noreferrer">X / TWITTER ↗</a
-        ><span>© 2026 DREAMY RECORDS</span>
+        <span>DREAMY RECORDS</span>
+        <span>TOUHOU ARRANGE MUSIC CIRCLE</span>
+      </div>
+      <nav>
+        <a href="/about/"><small>01</small><strong>ABOUT</strong><span>サークルについて</span></a>
+        <a href="/news/"><small>02</small><strong>NEWS</strong><span>最新情報</span></a>
+        <a href="/members/"><small>03</small><strong>MEMBERS</strong><span>メンバー紹介</span></a>
+        <a href="/music/"><small>04</small><strong>MUSIC</strong><span>作品一覧</span></a>
+        <a href="/events/"><small>05</small><strong>EVENTS</strong><span>イベント情報</span></a>
+        <a href="/shop/"><small>06</small><strong>SHOP</strong><span>取扱ショップ</span></a>
+        <a href="/media/"><small>07</small><strong>MEDIA</strong><span>動画・壁紙</span></a>
+        <a href="/contact/"><small>08</small><strong>CONTACT</strong><span>お問い合わせ</span></a>
+      </nav>
+      <div class="menu-foot">
+        <a href="https://x.com/dreamy_records" target="_blank" rel="noreferrer">X / TWITTER ↗</a>
+        <span>© 2026 DREAMY RECORDS</span>
       </div>
     </div>
     <slot />
