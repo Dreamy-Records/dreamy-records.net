@@ -8,16 +8,54 @@ const formatDate = (date: Date) =>
   date
     .toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })
     .replaceAll('/', '.');
+const years = [...new Set(news.map((item) => item.data.date.getFullYear()))].sort((a, b) => b - a);
+const categories = [...new Set(news.map((item) => item.data.category))].sort((a, b) =>
+  a.localeCompare(b, 'ja'),
+);
 ---
 
 <SiteLayout title="News — Dreamy Records" page="news"
   ><main class="page-shell dark-page news-page">
-    <header class="page-title"><span>02 / NEWS</span><h1>NEWS</h1><p>最新情報</p></header><section
-      class="news-list"
-    >
+    <header class="page-title"><span>02 / NEWS</span><h1>NEWS</h1><p>最新情報</p></header>
+    <div class="news-tools-wrap profile-reveal">
+      <form class="news-tools" data-news-filters>
+        <label class="news-search">
+          <span>SEARCH</span>
+          <input type="search" placeholder="キーワードで検索" aria-label="ニュースを検索" data-news-search />
+          <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+        </label>
+        <label class="news-filter">
+          <span>YEAR</span>
+          <select data-news-year aria-label="西暦で絞り込む">
+            <option value="">すべての西暦</option>
+            {years.map((year) => <option value={String(year)}>{year}</option>)}
+          </select>
+        </label>
+        <label class="news-filter">
+          <span>CATEGORY</span>
+          <select data-news-category aria-label="カテゴリーで絞り込む">
+            <option value="">すべてのカテゴリー</option>
+            {categories.map((category) => <option value={category}>{category}</option>)}
+          </select>
+        </label>
+        <button class="news-filter-reset" type="reset">
+          <i class="fa-solid fa-rotate-left" aria-hidden="true"></i>
+          <span>RESET</span>
+        </button>
+      </form>
+      <p class="news-filter-status" data-news-filter-status role="status" aria-live="polite"></p>
+    </div>
+    <section class="news-list">
       {
         news.map((item, i) => (
-          <a href={`/news/${item.id}/`} class="news-row">
+          <a
+            href={`/news/${item.id}/`}
+            class="news-row"
+            data-news-row
+            data-year={item.data.date.getFullYear()}
+            data-category={item.data.category}
+            data-search={`${item.data.title} ${item.data.category} ${formatDate(item.data.date)}`}
+          >
             <>
               <span class="news-index">{String(i + 1).padStart(2, '0')}</span>
               <time datetime={item.data.date.toISOString()}>{formatDate(item.data.date)}</time>
@@ -29,5 +67,43 @@ const formatDate = (date: Date) =>
         ))
       }
     </section>
-  </main></SiteLayout
->
+  </main>
+
+  <script>
+    const filters = document.querySelector<HTMLFormElement>('[data-news-filters]');
+    const searchInput = filters?.querySelector<HTMLInputElement>('[data-news-search]');
+    const yearSelect = filters?.querySelector<HTMLSelectElement>('[data-news-year]');
+    const categorySelect = filters?.querySelector<HTMLSelectElement>('[data-news-category]');
+    const rows = [...document.querySelectorAll<HTMLElement>('[data-news-row]')];
+    const status = document.querySelector<HTMLElement>('[data-news-filter-status]');
+
+    const normalize = (value: string) => value.toLocaleLowerCase('ja-JP').trim();
+
+    const updateNews = () => {
+      const query = normalize(searchInput?.value ?? '');
+      const year = yearSelect?.value ?? '';
+      const category = categorySelect?.value ?? '';
+      let count = 0;
+
+      rows.forEach((row) => {
+        const matches =
+          (!query || normalize(row.dataset.search ?? '').includes(query)) &&
+          (!year || row.dataset.year === year) &&
+          (!category || row.dataset.category === category);
+
+        row.hidden = !matches;
+        if (matches) count += 1;
+      });
+
+      if (status) {
+        status.textContent = count ? `${count}件の記事を表示中` : '該当する記事がありません。';
+      }
+    };
+
+    searchInput?.addEventListener('input', updateNews);
+    yearSelect?.addEventListener('change', updateNews);
+    categorySelect?.addEventListener('change', updateNews);
+    filters?.addEventListener('reset', () => requestAnimationFrame(updateNews));
+    updateNews();
+  </script>
+</SiteLayout>
