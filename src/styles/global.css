@@ -1602,7 +1602,7 @@ img {
     height: 40px;
   }
   .flow-info .flow-release-button {
-    display: inline-flex;
+    display: none;
   }
   .flow-count {
     display: none;
