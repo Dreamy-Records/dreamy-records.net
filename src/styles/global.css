@@ -21,6 +21,8 @@ body {
 }
 body {
   overflow-x: hidden;
+  /* Keep pinch zoom available while preventing double-tap page zoom. */
+  touch-action: manipulation;
 }
 a {
   color: inherit;
