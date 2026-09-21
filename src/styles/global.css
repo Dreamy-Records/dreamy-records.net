@@ -862,6 +862,90 @@ img {
   font-size: 9px;
   letter-spacing: 0.1em;
 }
+.news-floating-filter {
+  position: fixed;
+  z-index: 45;
+  top: 118px;
+  right: 3.6vw;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  min-height: 42px;
+  border: 1px solid #777;
+  background: #050505;
+  color: #fff;
+  padding: 0;
+  font: inherit;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  cursor: pointer;
+  box-shadow: 0 12px 30px #0008;
+  transition:
+    background 0.25s,
+    color 0.25s,
+    border-color 0.25s;
+}
+.news-floating-filter[hidden],
+.news-floating-filter-panel[hidden] {
+  display: none;
+}
+.news-floating-filter:hover,
+.news-floating-filter:focus-visible {
+  border-color: #fff;
+  outline: none;
+  background: #fff;
+  color: #000;
+}
+.news-floating-filter-panel {
+  position: fixed;
+  z-index: 55;
+  top: 170px;
+  right: 3.6vw;
+  width: min(430px, calc(100vw - 40px));
+  border: 1px solid #555;
+  background: #080808;
+  box-shadow: 0 20px 60px #000b;
+  padding: 18px;
+}
+.news-floating-filter-panel > header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+.news-floating-filter-panel > header > span {
+  color: #fff;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+}
+.news-floating-filter-panel > header button {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  border: 1px solid #555;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+.news-floating-filter-panel > header button:hover,
+.news-floating-filter-panel > header button:focus-visible {
+  border-color: #fff;
+  outline: none;
+}
+.news-floating-tools {
+  grid-template-columns: 1fr 1fr;
+  margin: 0;
+}
+.news-floating-tools .news-search {
+  grid-column: 1 / -1;
+}
+.news-floating-tools .news-filter-reset {
+  width: 100%;
+}
 .news-row[hidden] {
   display: none !important;
 }
@@ -1053,6 +1137,15 @@ img {
   }
   .news-filter-status {
     margin-bottom: 10px;
+  }
+  .news-floating-filter {
+    top: 88px;
+    right: 20px;
+  }
+  .news-floating-filter-panel {
+    top: 140px;
+    right: 20px;
+    width: calc(100vw - 40px);
   }
   .music-item {
     grid-template-columns: 28px 95px 1fr;
@@ -1508,11 +1601,8 @@ img {
     width: 40px;
     height: 40px;
   }
-  .flow-info h2 {
-    font-size: 18px;
-  }
   .flow-info .flow-release-button {
-    display: none;
+    display: inline-flex;
   }
   .flow-count {
     display: none;

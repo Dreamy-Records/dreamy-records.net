@@ -100,8 +100,6 @@ const releases = [
 
       <div class="flow-controls">
         <div class="flow-info">
-          <small id="flow-code">{releases[0].code} / {releases[0].year}</small>
-          <h2 id="flow-title">{releases[0].title}</h2>
           <a class="flow-release-button icon-action" id="flow-link" href={releases[0].link}>
             <span>VIEW RELEASE</span>
             <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
@@ -149,8 +147,6 @@ const releases = [
     const coverflow = document.querySelector<HTMLElement>('.coverflow');
     const listView = document.querySelector<HTMLElement>('.music-list-view');
     const viewButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-music-view]')];
-    const title = document.querySelector('#flow-title');
-    const code = document.querySelector('#flow-code');
     const current = document.querySelector('#flow-current');
     const flowLink = document.querySelector<HTMLAnchorElement>('#flow-link');
     const mobileView = window.matchMedia('(max-width: 760px)');
@@ -160,6 +156,7 @@ const releases = [
       Number.isInteger(savedActive) && savedActive >= 0 && savedActive < covers.length
         ? savedActive
         : 0;
+    let lastNavigationAt = 0;
 
     const spacing = () => Math.min(210, window.innerWidth * 0.28);
 
@@ -180,8 +177,9 @@ const releases = [
           z: -absoluteDistance * 170,
           opacity: absoluteDistance > 3 ? 0 : 1,
           zIndex: count - absoluteDistance,
-          duration: quick ? 0.22 : 0.95,
+          duration: quick ? 0.16 : 0.95,
           ease: quick ? 'power1.out' : 'power3.inOut',
+          overwrite: 'auto',
         });
         cover.style.pointerEvents = absoluteDistance > 3 ? 'none' : 'auto';
         cover.classList.toggle('active', distance === 0);
@@ -195,25 +193,21 @@ const releases = [
       });
 
       const selected = covers[active];
-      if (title) title.textContent = selected.dataset.title || '';
-      if (code) code.textContent = `${selected.dataset.code} / ${selected.dataset.year}`;
       if (current) current.textContent = String(active + 1).padStart(2, '0');
       if (flowLink) flowLink.href = selected.dataset.link || '#';
       sessionStorage.setItem(activeReleaseKey, String(active));
     };
 
-    const previous = () => {
-      active = (active - 1 + covers.length) % covers.length;
-      render();
+    const navigate = (direction: 1 | -1) => {
+      const now = performance.now();
+      const quick = now - lastNavigationAt < 260;
+      lastNavigationAt = now;
+      active = (active + direction + covers.length) % covers.length;
+      render(quick);
     };
 
-    const next = () => {
-      active = (active + 1) % covers.length;
-      render();
-    };
-
-    document.querySelector('.flow-prev')?.addEventListener('click', previous);
-    document.querySelector('.flow-next')?.addEventListener('click', next);
+    document.querySelector('.flow-prev')?.addEventListener('click', () => navigate(-1));
+    document.querySelector('.flow-next')?.addEventListener('click', () => navigate(1));
 
     covers.forEach((cover, index) => {
       cover.addEventListener('click', () => {
