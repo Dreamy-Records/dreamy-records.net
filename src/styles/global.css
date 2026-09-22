@@ -149,9 +149,10 @@ img {
   display: flex;
   flex: 0 0 auto;
   align-items: center;
+  margin-left: -12px;
 }
 .brand img {
-  width: 132px;
+  width: 120px;
   height: auto;
   max-height: 68px;
   object-fit: contain;
@@ -579,8 +580,11 @@ img {
     padding: 0 20px;
   }
   .brand img {
-    width: 102px;
+    width: 92px;
     max-height: 52px;
+  }
+  .brand {
+    margin-left: -6px;
   }
   .global-menu {
     padding: 105px 20px 25px;
@@ -2602,6 +2606,12 @@ img {
   font-size: 10px;
 }
 @media (max-width: 760px) {
+  /* Prevent iOS Safari from zooming when a contact field receives focus. */
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    font-size: 16px;
+  }
   .contact-confirm-actions {
     grid-template-columns: 1fr;
   }
