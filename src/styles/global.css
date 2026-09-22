@@ -27,6 +27,13 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+button,
+input,
+select,
+textarea {
+  -webkit-tap-highlight-color: transparent;
 }
 img {
   max-width: 100%;
@@ -873,6 +880,13 @@ img {
 }
 .news-tools input::placeholder {
   color: #b3b3b3;
+}
+.news-tools input:-webkit-autofill,
+.news-tools input:-webkit-autofill:hover,
+.news-tools input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #fff;
+  -webkit-box-shadow: 0 0 0 1000px #050505 inset;
+  caret-color: #fff;
 }
 .news-tools select {
   padding: 0 30px 0 13px;
