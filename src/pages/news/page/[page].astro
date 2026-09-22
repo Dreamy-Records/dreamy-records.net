@@ -1,0 +1,41 @@
+---
+import { getCollection } from 'astro:content';
+import SiteLayout from '../../../layouts/SiteLayout.astro';
+import NewsListing from '../../../components/NewsListing.astro';
+
+const articlesPerPage = 10;
+const articles = (await getCollection('news')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const totalPages = Math.ceil(articles.length / articlesPerPage);
+
+export async function getStaticPaths() {
+  const articlesPerPage = 10;
+  const entries = (await getCollection('news')).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  const pageCount = Math.ceil(entries.length / articlesPerPage);
+
+  return Array.from({ length: Math.max(pageCount - 1, 0) }, (_, index) => {
+    const currentPage = index + 2;
+    const startIndex = (currentPage - 1) * articlesPerPage;
+
+    return {
+      params: { page: String(currentPage) },
+      props: {
+        articles: entries.slice(startIndex, startIndex + articlesPerPage),
+        currentPage,
+        totalPages: pageCount,
+        startIndex,
+      },
+    };
+  });
+}
+
+const { articles: pageArticles, currentPage, startIndex } = Astro.props;
+---
+
+<SiteLayout title={`News — Page ${currentPage} — Dreamy Records`} page="news">
+  <NewsListing
+    articles={pageArticles}
+    currentPage={currentPage}
+    totalPages={totalPages}
+    startIndex={startIndex}
+  />
+</SiteLayout>

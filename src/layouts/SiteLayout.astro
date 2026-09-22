@@ -13,6 +13,25 @@ const ogImageBase = import.meta.env.DEV ? Astro.url.origin : Astro.site;
 const ogImage = new URL(image || defaultOgImage, ogImageBase).href;
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site).href;
 const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
+const navigationItems = [
+  { href: '/about/', label: 'ABOUT', page: 'about' },
+  { href: '/news/', label: 'NEWS', page: 'news' },
+  { href: '/members/', label: 'MEMBERS', page: 'members' },
+  { href: '/music/', label: 'MUSIC', page: 'music' },
+  { href: '/events/', label: 'EVENTS', page: 'events' },
+  { href: '/shop/', label: 'SHOP', page: 'shop' },
+  { href: '/media/', label: 'MEDIA', page: 'media' },
+  { href: '/contact/', label: 'CONTACT', page: 'contact' },
+];
+const currentNavigationPage = page === 'news-detail' ? 'news' : page === 'member-detail' ? 'members' : page;
+const currentPageLabel =
+  navigationItems.find((item) => item.page === currentNavigationPage)?.label ??
+  ({
+    'rss-info': 'RSS',
+    privacy: 'PRIVACY POLICY',
+    sitemap: 'SITEMAP',
+    error: 'ERROR',
+  }[page] ?? 'HOME');
 ---
 
 <!doctype html>
@@ -25,7 +44,7 @@ const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
       rel="alternate"
       type="application/rss+xml"
       title="Dreamy Records NEWS"
-      href="/rss.xml"
+      href="/rss"
     /><link rel="icon" type="image/png" href="/assets/favicon.png" /><link
       rel="canonical"
       href={canonicalUrl}
@@ -65,22 +84,26 @@ const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
         <img src="/assets/logo.png" alt="Dreamy Records" />
       </a>
       <nav class="desktop-nav" aria-label="メインナビゲーション">
-        <a href="/about/">ABOUT</a>
-        <a href="/news/">NEWS</a>
-        <a href="/members/">MEMBERS</a>
-        <a href="/music/">MUSIC</a>
-        <a href="/events/">EVENTS</a>
-        <a href="/shop/">SHOP</a>
-        <a href="/media/">MEDIA</a>
-        <a href="/contact/">CONTACT</a>
+        {
+          navigationItems.map((item) => (
+            <a
+              href={item.href}
+              class:list={{ 'is-current': item.page === currentNavigationPage }}
+              aria-current={item.page === currentNavigationPage ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          ))
+        }
       </nav>
+      {page && <span class="mobile-current-page" aria-current="page">{currentPageLabel}</span>}
       <button
-        class="menu-button"
+        class:list={['menu-button', { 'menu-button--icon-only': Boolean(page) }]}
         aria-expanded="false"
         aria-controls="global-menu"
         aria-label="メニューを開く"
       >
-        <span>MENU</span>
+        {!page && <span>MENU</span>}
         <i></i>
         <i></i>
         <i></i>
@@ -112,6 +135,7 @@ const isStaging = Astro.site?.hostname === 'test.dreamy-records.net';
         <footer class="site-footer">
           <nav class="site-footer-nav" aria-label="フッターナビゲーション">
             <a href="/contact/">CONTACT</a>
+            <a href="/rss-info/">RSS</a>
             <a href="/privacy/">PRIVACY POLICY</a>
             <a href="/sitemap/">SITEMAP</a>
           </nav>

@@ -1,0 +1,53 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+
+const rssUrl = new URL('/rss', Astro.site).href;
+---
+
+<SiteLayout title="RSS — Dreamy Records" page="rss-info">
+  <main class="page-shell dark-page rss-info-page">
+    <header class="page-title"><span>RSS</span><h1>RSS</h1><p>RSSフィード</p></header>
+
+    <section class="rss-info-content profile-reveal" aria-labelledby="rss-info-heading">
+      <span>STAY UPDATED</span>
+      <h2 id="rss-info-heading">Dreamy Recordsの<br />最新情報を受け取る</h2>
+      <p>
+        RSSリーダーに以下のURLを登録すると、ニュースの更新情報を受け取れます。<br />
+        お使いのRSSリーダーへコピーしてご利用ください。
+      </p>
+      <div class="rss-url-box">
+        <input type="text" value={rssUrl} readonly aria-label="RSSフィードURL" data-rss-url />
+        <button class="icon-action" type="button" data-copy-rss>
+          <span>コピー</span>
+          <i class="fa-regular fa-copy" aria-hidden="true"></i>
+        </button>
+      </div>
+      <p class="rss-copy-status" data-rss-copy-status role="status" aria-live="polite"></p>
+      <a class="rss-open-link" href="/rss" target="_blank" rel="noopener noreferrer">
+        <span>RSSを開く</span>
+        <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i>
+      </a>
+    </section>
+  </main>
+
+  <script>
+    const copyButton = document.querySelector<HTMLButtonElement>('[data-copy-rss]');
+    const rssInput = document.querySelector<HTMLInputElement>('[data-rss-url]');
+    const status = document.querySelector<HTMLElement>('[data-rss-copy-status]');
+
+    copyButton?.addEventListener('click', async () => {
+      const rssUrl = rssInput?.value ?? '';
+      if (!rssUrl) return;
+
+      try {
+        await navigator.clipboard.writeText(rssUrl);
+      } catch {
+        rssInput?.select();
+        document.execCommand('copy');
+        rssInput?.setSelectionRange(0, 0);
+      }
+
+      if (status) status.textContent = 'RSSフィードURLをコピーしました';
+    });
+  </script>
+</SiteLayout>
