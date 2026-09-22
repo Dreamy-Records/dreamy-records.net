@@ -4,7 +4,7 @@ date: 2026-04-25
 category: 'RELEASE'
 description: 'Dreamy Recordsが贈る新シリーズ『Dream Dance Floor』の第一弾が登場しました。'
 image: '/assets/1-1024x1012.webp'
-redirectTo: 'https://sp.dreamy-records.net/'
+redirectTo: 'https://sp.dreamy-records.net/discography/dmer008'
 ---
 
 Dreamy Recordsが贈る新シリーズ、**『Dream Dance Floor』**の第一弾がついに登場しました。
