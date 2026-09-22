@@ -1,13 +1,22 @@
 ---
 import '../styles/global.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+
+interface Props {
+  title?: string;
+  page?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+}
+
 const {
   title = 'Dreamy Records',
   page = '',
   description = '東方同人音楽アレンジサークル Dreamy Records 公式サイト',
   image,
   noindex = false,
-} = Astro.props;
+}: Props = Astro.props;
 const defaultOgImage = '/assets/news/19-Dreamy-Records-header-1.png';
 const ogImageBase = import.meta.env.DEV ? Astro.url.origin : Astro.site;
 const ogImage = new URL(image || defaultOgImage, ogImageBase).href;
@@ -24,14 +33,15 @@ const navigationItems = [
   { href: '/contact/', label: 'CONTACT', page: 'contact' },
 ];
 const currentNavigationPage = page === 'news-detail' ? 'news' : page === 'member-detail' ? 'members' : page;
+const utilityPageLabels: Record<string, string> = {
+  'rss-info': 'RSS',
+  privacy: 'PRIVACY POLICY',
+  sitemap: 'SITEMAP',
+  error: 'ERROR',
+};
 const currentPageLabel =
   navigationItems.find((item) => item.page === currentNavigationPage)?.label ??
-  ({
-    'rss-info': 'RSS',
-    privacy: 'PRIVACY POLICY',
-    sitemap: 'SITEMAP',
-    error: 'ERROR',
-  }[page] ?? 'HOME');
+  (utilityPageLabels[page] ?? 'HOME');
 ---
 
 <!doctype html>
@@ -97,6 +107,27 @@ const currentPageLabel =
         }
       </nav>
       {page && <span class="mobile-current-page" aria-current="page">{currentPageLabel}</span>}
+      <nav class="header-socials" aria-label="Dreamy Records SNS">
+        <a href="https://x.com/dreamy_records" target="_blank" rel="noreferrer" aria-label="X">
+          <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+        </a>
+        <a
+          href="https://www.youtube.com/@Dreamy_Records"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="YouTube"
+        >
+          <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+        </a>
+        <a
+          href="https://discord.com/invite/aTrtVQp4RQ"
+          target="_blank"
+          rel="noreferrer"
+          aria-label="Discord"
+        >
+          <i class="fa-brands fa-discord" aria-hidden="true"></i>
+        </a>
+      </nav>
       <button
         class:list={['menu-button', { 'menu-button--icon-only': Boolean(page) }]}
         aria-expanded="false"
@@ -110,10 +141,6 @@ const currentPageLabel =
       </button>
     </header>
     <div id="global-menu" class="global-menu" aria-hidden="true">
-      <div class="menu-meta">
-        <span>DREAMY RECORDS</span>
-        <span>TOUHOU ARRANGE MUSIC CIRCLE</span>
-      </div>
       <nav>
         <a href="/about/"><small>01</small><strong>ABOUT</strong><span>サークルについて</span></a>
         <a href="/news/"><small>02</small><strong>NEWS</strong><span>最新情報</span></a>
@@ -125,7 +152,27 @@ const currentPageLabel =
         <a href="/contact/"><small>08</small><strong>CONTACT</strong><span>お問い合わせ</span></a>
       </nav>
       <div class="menu-foot">
-        <a href="https://x.com/dreamy_records" target="_blank" rel="noreferrer">X / TWITTER ↗</a>
+        <nav class="menu-socials" aria-label="Dreamy Records SNS">
+          <a href="https://x.com/dreamy_records" target="_blank" rel="noreferrer" aria-label="X">
+            <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://www.youtube.com/@Dreamy_Records"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="YouTube"
+          >
+            <i class="fa-brands fa-youtube" aria-hidden="true"></i>
+          </a>
+          <a
+            href="https://discord.com/invite/aTrtVQp4RQ"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Discord"
+          >
+            <i class="fa-brands fa-discord" aria-hidden="true"></i>
+          </a>
+        </nav>
         <span>© 2026 DREAMY RECORDS</span>
       </div>
     </div>
@@ -169,45 +216,51 @@ const currentPageLabel =
         };
         const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
         const historyReturn = document.documentElement.classList.contains('history-return');
-        let menuAnimating = false;
+        const menuLinks = gsap.utils.toArray<HTMLElement>('.global-menu > nav a');
+        let menuTransition = 0;
         button?.addEventListener('click', () => {
-          if (menuAnimating || !menu) return;
+          if (!menu) return;
+          const transitionId = ++menuTransition;
           const open = button.getAttribute('aria-expanded') === 'true';
           button.setAttribute('aria-expanded', String(!open));
           button.setAttribute('aria-label', open ? 'メニューを開く' : 'メニューを閉じる');
           menu.setAttribute('aria-hidden', String(open));
           document.body.classList.toggle('menu-open', !open);
+          if (reduce) {
+            menu.classList.toggle('is-open', !open);
+            return;
+          }
+
+          gsap.killTweensOf(menuLinks);
+
           if (!open) {
             menu.classList.add('is-open');
-            if (!reduce)
-              gsap.fromTo(
-                '.global-menu nav a',
-                { y: 45, opacity: 0 },
-                {
-                  y: 0,
-                  opacity: 1,
-                  duration: 0.65,
-                  stagger: 0.08,
-                  ease: 'power3.out',
-                  delay: 0.2,
-                  clearProps: 'opacity,transform',
-                },
-              );
-          } else if (reduce) {
-            menu.classList.remove('is-open');
+            gsap.fromTo(
+              menuLinks,
+              { y: 45, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.65,
+                stagger: 0.08,
+                ease: 'power3.out',
+                delay: 0.2,
+                clearProps: 'opacity,transform',
+              },
+            );
           } else {
-            menuAnimating = true;
-            gsap.to('.global-menu nav a', {
+            gsap.to(menuLinks, {
               y: -24,
               opacity: 0,
               duration: 0.28,
               stagger: { each: 0.045, from: 'end' },
               ease: 'power2.in',
               onComplete: () => {
+                if (transitionId !== menuTransition) return;
                 menu.classList.remove('is-open');
                 window.setTimeout(() => {
-                  gsap.set('.global-menu nav a', { clearProps: 'opacity,transform' });
-                  menuAnimating = false;
+                  if (transitionId !== menuTransition) return;
+                  gsap.set(menuLinks, { clearProps: 'opacity,transform' });
                 }, 680);
               },
             });

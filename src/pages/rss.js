@@ -1,9 +1,11 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
+import { assertUniqueNewsSlugs, getNewsSlug } from '../utils/newsSlug';
 
 export async function GET(context) {
   const articles = await getCollection('news');
   const sortedArticles = articles.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  assertUniqueNewsSlugs(sortedArticles);
 
   return rss({
     title: 'Dreamy Records NEWS',
@@ -14,7 +16,7 @@ export async function GET(context) {
       title: article.data.title,
       pubDate: article.data.date,
       description: article.data.description,
-      link: `/news/${article.id}/`,
+      link: `/news/${getNewsSlug(article)}/`,
       categories: [article.data.category],
     })),
     customData: '<language>ja</language>',

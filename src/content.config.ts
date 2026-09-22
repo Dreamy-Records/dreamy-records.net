@@ -8,6 +8,10 @@ const news = defineCollection({
     date: z.coerce.date(),
     category: z.string(),
     description: z.string(),
+    slug: z
+      .string()
+      .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'slugは英小文字・数字・ハイフンで指定してください。')
+      .optional(),
     image: z.string().optional(),
     showImage: z.boolean().default(false),
     redirectTo: z.string().url().optional(),

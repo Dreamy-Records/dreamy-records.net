@@ -2,6 +2,20 @@
 import SiteLayout from '../layouts/SiteLayout.astro';
 const releases = [
   {
+    code: 'DMERCD–010',
+    year: '2026',
+    title: 'Summer Diary',
+    image: '/assets/summerdiary.png',
+    link: 'https://sp.dreamy-records.net/',
+  },
+  {
+    code: 'DMERCD–009',
+    year: '2026',
+    title: 'THE DREAMY RECORDS BEST5 COLLECTION',
+    image: '/assets/tdrb5c.png',
+    link: 'https://sp.dreamy-records.net/',
+  },
+  {
     code: 'DMERCD–008',
     year: '2026',
     title: 'Dream Dance Floor.01',
@@ -55,7 +69,7 @@ const releases = [
     year: '2024',
     title: 'Dream Break',
     image: '/assets/dreambreak.png',
-    link: 'https://dreamy-records.net/music/',
+    link: '/news/post-54/',
   },
 ];
 ---
@@ -116,7 +130,7 @@ const releases = [
       {
         releases.map((release, index) => (
           <a class="music-item" href={release.link}>
-            <span class="music-no">{String(index + 1).padStart(2, '0')}</span>
+            <span class="music-no">{String(releases.length - index).padStart(2, '0')}</span>
             <span class="music-cover">
               <img src={release.image} alt={`${release.title} ジャケット`} loading="lazy" />
             </span>

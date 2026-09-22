@@ -4,23 +4,27 @@ import SiteLayout from '../layouts/SiteLayout.astro';
 const shops = [
   {
     name: 'BOOTH',
-    type: 'OFFICIAL ONLINE STORE',
     description: 'Dreamy Records公式通販。CD・ダウンロード作品を取り扱っています。',
     href: 'https://dreamyrecords.booth.pm/',
+    logo: '/assets/booth.png',
   },
   {
     name: 'メロンブックス',
-    type: 'DOUJIN SHOP',
     description: 'Dreamy Recordsの作品をお買い求めいただけます。',
-    href: 'https://www.melonbooks.co.jp/',
+    href: 'https://www.melonbooks.co.jp/circle/index.php?circle_id=125846',
     logo: '/assets/melonbooks.png',
   },
   {
     name: 'AKIBA-HOBBY',
-    type: 'TOUHOU PROJECT SHOP',
     description: 'Dreamy Recordsの作品をお買い求めいただけます。',
-    href: 'https://shop.akbh.jp/',
+    href: 'https://shop.akbh.jp/collections/vendors?q=Dreamy%20Records',
     logo: '/assets/akiba-hobby.png',
+  },
+  {
+    name: 'DLsite',
+    description: 'Dreamy Recordsの作品をお買い求めいただけます。',
+    href: 'https://www.dlsite.com/home/circle/profile/=/maker_id/RG01062148.html',
+    logo: '/assets/dlsite.png',
   },
 ];
 ---
@@ -44,7 +48,6 @@ const shops = [
               <span class="shop-logo shop-logo--text">{shop.name}</span>
             )}
             <span class="shop-info">
-              <small>{shop.type}</small>
               <h2>{shop.name}</h2>
               <p>{shop.description}</p>
             </span>

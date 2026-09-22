@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { getNewsSlug } from '../utils/newsSlug';
 
 interface Props {
   articles: CollectionEntry<'news'>[];
@@ -54,7 +55,7 @@ const pageHref = (page: number) => (page === 1 ? '/news/' : `/news/page/${page}/
     {
       articles.map((item, index) => (
         <a
-          href={item.data.redirectTo ?? `/news/${item.id}/`}
+          href={item.data.redirectTo ?? `/news/${getNewsSlug(item)}/`}
           class="news-row"
           data-news-row
           data-year={item.data.date.getFullYear()}
@@ -244,7 +245,7 @@ const pageHref = (page: number) => (page === 1 ? '/news/' : `/news/page/${page}/
     floatingTrigger.setAttribute('aria-expanded', String(!isOpen));
     if (!isOpen) floatingPanel.querySelector<HTMLInputElement>('[data-news-search]')?.focus();
   });
-  floatingClose?.addEventListener('click', closeFloatingFilters);
+  floatingClose?.addEventListener('click', () => closeFloatingFilters());
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && floatingPanel && !floatingPanel.hidden) closeFloatingFilters();
   });

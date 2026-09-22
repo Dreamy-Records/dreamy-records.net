@@ -1,10 +1,12 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { assertUniqueNewsSlugs, getNewsSlug } from '../../utils/newsSlug';
 
 export async function getStaticPaths() {
   const entries = await getCollection('news');
-  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+  assertUniqueNewsSlugs(entries);
+  return entries.map((entry) => ({ params: { slug: getNewsSlug(entry) }, props: { entry } }));
 }
 
 const { entry } = Astro.props;

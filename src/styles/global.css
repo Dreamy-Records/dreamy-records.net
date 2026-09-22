@@ -238,10 +238,10 @@ img {
   letter-spacing: 0.2em;
   font-weight: 800;
 }
-.global-menu nav {
+.global-menu > nav {
   margin: auto 0;
 }
-.global-menu nav a {
+.global-menu > nav a {
   display: grid;
   grid-template-columns: 55px 1fr auto;
   align-items: end;
@@ -249,20 +249,20 @@ img {
   padding: 10px 0;
   overflow: hidden;
 }
-.global-menu nav small {
+.global-menu > nav small {
   font-size: 10px;
 }
-.global-menu nav strong {
+.global-menu > nav strong {
   font-size: clamp(3rem, 7.5vw, 7rem);
   line-height: 0.9;
   letter-spacing: -0.07em;
   transition: 0.3s;
 }
-.global-menu nav a:hover strong {
+.global-menu > nav a:hover strong {
   transform: translateX(20px);
   font-style: italic;
 }
-.global-menu nav span {
+.global-menu > nav span {
   font-size: 11px;
   font-weight: 700;
 }
@@ -588,13 +588,13 @@ img {
   .menu-meta span:last-child {
     display: none;
   }
-  .global-menu nav a {
+  .global-menu > nav a {
     grid-template-columns: 35px 1fr;
   }
-  .global-menu nav strong {
+  .global-menu > nav strong {
     font-size: 13vw;
   }
-  .global-menu nav span {
+  .global-menu > nav span {
     display: none;
   }
   .hero-content {
@@ -708,6 +708,38 @@ img {
 .mobile-current-page {
   display: none;
 }
+.header-socials,
+.menu-socials {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.header-socials {
+  margin-left: auto;
+}
+.header-socials a,
+.menu-socials a {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  place-items: center;
+  color: #fff;
+  border: 1px solid #ffffff99;
+  border-radius: 50%;
+  font-size: 15px;
+  transition:
+    background 0.2s,
+    color 0.2s,
+    border-color 0.2s;
+}
+.header-socials a:hover,
+.header-socials a:focus-visible,
+.menu-socials a:hover,
+.menu-socials a:focus-visible {
+  border-color: #fff;
+  background: #fff;
+  color: #050505;
+}
 .menu-button {
   display: none;
   margin-left: auto;
@@ -716,10 +748,7 @@ img {
   background: #050505;
   color: #fff;
 }
-.global-menu nav a {
-  border-color: #fff;
-}
-.menu-foot a {
+.global-menu > nav a {
   border-color: #fff;
 }
 .kicker:before {
@@ -798,10 +827,11 @@ img {
 }
 .news-tools {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 150px 190px auto;
+  grid-template-columns: minmax(220px, 1fr) 140px 180px auto;
+  width: min(760px, 100%);
   gap: 10px;
   align-items: end;
-  margin: 0 0 16px;
+  margin: 0 0 16px auto;
 }
 .news-tools label {
   position: relative;
@@ -873,6 +903,11 @@ img {
   color: #c5c5c5;
   font-size: 9px;
   letter-spacing: 0.1em;
+}
+@media (min-width: 761px) {
+  .news-filter-status {
+    text-align: right;
+  }
 }
 .news-floating-filter {
   position: fixed;
@@ -1157,6 +1192,9 @@ img {
     backdrop-filter: none;
   }
   .desktop-nav {
+    display: none;
+  }
+  .header-socials {
     display: none;
   }
   .menu-button {
@@ -1755,7 +1793,7 @@ img {
 }
 .article-head h1 {
   font-family: 'Noto Sans JP';
-  font-size: clamp(2.3rem, 5vw, 5.5rem);
+  font-size: clamp(2rem, 4vw, 4rem);
   line-height: 1.25;
   letter-spacing: -0.04em;
   margin: 38px 0 24px;
@@ -1934,7 +1972,7 @@ img {
     margin-top: 40px;
   }
   .article-head h1 {
-    font-size: 9vw;
+    font-size: 7.5vw;
     margin-top: 28px;
   }
   .article-body {
@@ -2100,7 +2138,7 @@ img {
       clip-path 0.65s cubic-bezier(0.8, 0, 0.15, 1),
       visibility 0s linear 0s;
   }
-  .global-menu nav a {
+  .global-menu > nav a {
     will-change: transform, opacity;
   }
 }
@@ -2540,6 +2578,9 @@ img {
   overflow-wrap: anywhere;
   white-space: pre-wrap;
 }
+.contact-turnstile {
+  margin: 0 0 24px;
+}
 .contact-confirm-actions {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -2631,10 +2672,10 @@ img {
   .thanks-actions a {
     width: 100%;
   }
-  .global-menu nav strong {
+  .global-menu > nav strong {
     font-size: 10vw;
   }
-  .global-menu nav a {
+  .global-menu > nav a {
     padding: 8px 0;
   }
   .next-event {
