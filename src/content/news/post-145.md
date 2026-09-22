@@ -1,5 +1,5 @@
 ---
-title: 'ホームページリニューアル'
+title: 'Dreamy Records公式サイトをリニューアルしました。'
 date: 2026-09-23
 category: 'OTHER'
 ---
