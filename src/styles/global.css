@@ -2121,6 +2121,9 @@ img {
   letter-spacing: -0.065em;
   margin: 0;
 }
+.about-en .hero-catchphrase-line {
+  display: inline-block;
+}
 .about-ja {
   align-self: end;
   max-width: 580px;

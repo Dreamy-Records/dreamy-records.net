@@ -10,9 +10,19 @@ import SiteLayout from '../layouts/SiteLayout.astro';
       <p>サークルについて</p>
     </header>
 
-    <section class="about-lead about-reveal">
-      <p class="about-en">TOUHOU ARRANGE<br />MUSIC CIRCLE<br />FROM TOKYO.</p>
-      <div class="about-ja">
+    <section class="about-lead">
+      <p class="about-en" aria-label="BEYOND THE DREAM.">
+        <span class="hero-catchphrase-line hero-catchphrase-line-beyond">
+          <span class="hero-catchphrase-text">BEYOND</span>
+        </span><br />
+        <span class="hero-catchphrase-line hero-catchphrase-line-the">
+          <span class="hero-catchphrase-text">THE</span>
+        </span><br />
+        <span class="hero-catchphrase-line hero-catchphrase-line-dream">
+          <span class="hero-catchphrase-text">DREAM.</span>
+        </span>
+      </p>
+      <div class="about-ja about-reveal">
         <h2>ABOUT US</h2>
         <p>
           2022年にみょん（Arr.）とくだけん（Staff）を中心に結成された、まっすん（Vocal）、えちえちマンたかし（Vocal/Lyric）、まさちん
@@ -47,7 +57,6 @@ import SiteLayout from '../layouts/SiteLayout.astro';
     </section>
 
     <footer class="about-foot about-reveal">
-      <p>BEYOND THE DREAM.</p>
       <a href="/members/">MEET THE MEMBERS <span>→</span></a>
     </footer>
   </main>
