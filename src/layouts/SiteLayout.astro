@@ -217,6 +217,7 @@ const currentPageLabel =
         const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
         const historyReturn = document.documentElement.classList.contains('history-return');
         const menuLinks = gsap.utils.toArray<HTMLElement>('.global-menu > nav a');
+        const menuFooterItems = gsap.utils.toArray<HTMLElement>('.menu-socials, .menu-foot > span');
         let menuTransition = 0;
         button?.addEventListener('click', () => {
           if (!menu) return;
@@ -231,7 +232,7 @@ const currentPageLabel =
             return;
           }
 
-          gsap.killTweensOf(menuLinks);
+          gsap.killTweensOf([...menuLinks, ...menuFooterItems]);
 
           if (!open) {
             menu.classList.add('is-open');
@@ -245,6 +246,19 @@ const currentPageLabel =
                 stagger: 0.08,
                 ease: 'power3.out',
                 delay: 0.2,
+                clearProps: 'opacity,transform',
+              },
+            );
+            gsap.fromTo(
+              menuFooterItems,
+              { y: 18, opacity: 0 },
+              {
+                y: 0,
+                opacity: 1,
+                duration: 0.55,
+                stagger: 0.1,
+                ease: 'power3.out',
+                delay: 0.4,
                 clearProps: 'opacity,transform',
               },
             );
@@ -263,6 +277,13 @@ const currentPageLabel =
                   gsap.set(menuLinks, { clearProps: 'opacity,transform' });
                 }, 680);
               },
+            });
+            gsap.to(menuFooterItems, {
+              y: -12,
+              opacity: 0,
+              duration: 0.24,
+              stagger: { each: 0.06, from: 'end' },
+              ease: 'power2.in',
             });
           }
         });

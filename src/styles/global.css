@@ -736,6 +736,13 @@ img {
     color 0.2s,
     border-color 0.2s;
 }
+.header-socials a i,
+.menu-socials a i {
+  display: block;
+  width: 1em;
+  line-height: 1;
+  text-align: center;
+}
 .header-socials a:hover,
 .header-socials a:focus-visible,
 .menu-socials a:hover,
