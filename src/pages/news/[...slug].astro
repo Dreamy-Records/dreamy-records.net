@@ -1,7 +1,7 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { getCollection, render } from 'astro:content';
-import { assertUniqueNewsSlugs, getNewsSlug } from '../../utils/newsSlug';
+import { assertUniqueNewsSlugs, getNewsDescription, getNewsSlug } from '../../utils/newsSlug';
 
 export async function getStaticPaths() {
   const entries = await getCollection('news');
@@ -15,6 +15,7 @@ const date = entry.data.date
   .toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })
   .replaceAll('/', '.');
 const articleTitle = entry.data.title;
+const articleDescription = getNewsDescription(entry);
 const articleUrl = new URL(Astro.url.pathname, Astro.site).href;
 const xShareUrl = `https://x.com/intent/post?${new URLSearchParams({
   text: articleTitle,
@@ -26,7 +27,7 @@ const xShareUrl = `https://x.com/intent/post?${new URLSearchParams({
 <SiteLayout
   title={`${entry.data.title} — Dreamy Records`}
   page="news-detail"
-  description={entry.data.description}
+  description={articleDescription}
   image={entry.data.image}
 >
   <main class="article-page">

@@ -7,7 +7,7 @@ const news = defineCollection({
     title: z.string(),
     date: z.coerce.date(),
     category: z.string(),
-    description: z.string(),
+    description: z.string().optional(),
     slug: z
       .string()
       .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'slugは英小文字・数字・ハイフンで指定してください。')

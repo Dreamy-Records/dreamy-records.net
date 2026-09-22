@@ -1,6 +1,6 @@
 import rss from '@astrojs/rss';
 import { getCollection } from 'astro:content';
-import { assertUniqueNewsSlugs, getNewsSlug } from '../utils/newsSlug';
+import { assertUniqueNewsSlugs, getNewsDescription, getNewsSlug } from '../utils/newsSlug';
 
 export async function GET(context) {
   const articles = await getCollection('news');
@@ -15,7 +15,7 @@ export async function GET(context) {
     items: sortedArticles.map((article) => ({
       title: article.data.title,
       pubDate: article.data.date,
-      description: article.data.description,
+      description: getNewsDescription(article),
       link: `/news/${getNewsSlug(article)}/`,
       categories: [article.data.category],
     })),

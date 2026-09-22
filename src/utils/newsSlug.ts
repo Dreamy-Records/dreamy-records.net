@@ -1,34 +1,40 @@
 import type { CollectionEntry } from 'astro:content';
-import { legacyRedirects } from '../data/legacyRedirects';
 
 type NewsEntry = CollectionEntry<'news'>;
 
-const preservedNewsIds = new Set([
-  ...legacyRedirects.map((redirect) => redirect.destination.match(/^\/news\/([^/]+)\/$/)?.[1]),
-  'new-member-2026',
-  'site-renewal-test',
-]);
-
-const stableRandomNumber = (value: string) => {
-  let hash = 2166136261;
-
-  for (const character of value) {
-    hash ^= character.charCodeAt(0);
-    hash = Math.imul(hash, 16777619);
-  }
-
-  return ((hash >>> 0) % 9000) + 1000;
-};
-
 /**
- * Keeps migrated article URLs intact. New articles receive a stable, random-looking
- * four-digit post number unless a custom slug is explicitly supplied in frontmatter.
+ * Uses the Markdown filename as the default URL. A frontmatter slug always takes
+ * precedence, so articles can still use a manually chosen URL when needed.
  */
 export const getNewsSlug = (entry: NewsEntry) => {
   if (entry.data.slug) return entry.data.slug;
-  if (preservedNewsIds.has(entry.id)) return entry.id;
+  return entry.id;
+};
 
-  return `post-${stableRandomNumber(entry.id)}`;
+const plainTextFromMarkdown = (markdown: string) =>
+  markdown
+    .replace(/```[\s\S]*?```/g, ' ')
+    .replace(/<!--([\s\S]*?)-->/g, ' ')
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/[`*_~>#|]/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+/** Returns a manual description when present, otherwise a short summary from the article body. */
+export const getNewsDescription = (entry: NewsEntry) => {
+  const manualDescription = entry.data.description?.trim();
+  if (manualDescription) return manualDescription;
+
+  const text = plainTextFromMarkdown(entry.body ?? '');
+  if (!text) return entry.data.title;
+
+  const maximumLength = 120;
+  const characters = Array.from(text);
+  return characters.length > maximumLength
+    ? `${characters.slice(0, maximumLength).join('')}…`
+    : text;
 };
 
 export const assertUniqueNewsSlugs = (entries: NewsEntry[]) => {
