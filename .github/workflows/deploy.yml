@@ -51,6 +51,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    env:
+      SSH_HOST: ${{ secrets.SSH_HOST }}
+      SSH_USER: ${{ secrets.SSH_USER }}
+      SSH_PORT: ${{ secrets.SSH_PORT }}
+      SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+      PRODUCTION_PATH: ${{ secrets.PRODUCTION_PATH }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -70,15 +76,8 @@ jobs:
         run: npm run build
 
       - name: Validate production deployment settings
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
-          PRODUCTION_PATH: ${{ secrets.PRODUCTION_PATH }}
         run: |
-          for value in SSH_HOST SSH_USER SSH_PORT SSH_PRIVATE_KEY SSH_KNOWN_HOSTS PRODUCTION_PATH; do
+          for value in SSH_HOST SSH_USER SSH_PORT SSH_PRIVATE_KEY PRODUCTION_PATH; do
             if [ -z "${!value}" ]; then
               echo "Required secret is missing: $value" >&2
               exit 1
@@ -106,29 +105,16 @@ jobs:
           fi
 
       - name: Configure SSH
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
         run: |
-          DEPLOY_KEY_PATH="$RUNNER_TEMP/dreamy-records-deploy-key"
-          KNOWN_HOSTS_PATH="$RUNNER_TEMP/dreamy-records-known-hosts"
-
-          printf '%s\n' "$SSH_PRIVATE_KEY" > "$DEPLOY_KEY_PATH"
-          printf '%s\n' "$SSH_KNOWN_HOSTS" > "$KNOWN_HOSTS_PATH"
-
-          chmod 600 "$DEPLOY_KEY_PATH" "$KNOWN_HOSTS_PATH"
+          mkdir -p ~/.ssh
+          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p "$SSH_PORT" -H "$SSH_HOST" >> ~/.ssh/known_hosts
 
       - name: Deploy to production with rsync
-        env:
-          SSH_HOST: ${{ secrets.SSH_HOST }}
-          SSH_USER: ${{ secrets.SSH_USER }}
-          SSH_PORT: ${{ secrets.SSH_PORT }}
-          PRODUCTION_PATH: ${{ secrets.PRODUCTION_PATH }}
         run: |
-          DEPLOY_KEY_PATH="$RUNNER_TEMP/dreamy-records-deploy-key"
-          KNOWN_HOSTS_PATH="$RUNNER_TEMP/dreamy-records-known-hosts"
-
-          rsync -avz \
-            -e "ssh -i $DEPLOY_KEY_PATH -p $SSH_PORT -o IdentitiesOnly=yes -o UserKnownHostsFile=$KNOWN_HOSTS_PATH -o StrictHostKeyChecking=yes" \
+          rsync -avzc \
+            --exclude='.DS_Store' \
+            -e "ssh -i ~/.ssh/id_rsa -p $SSH_PORT -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes" \
             dist/ \
             "$SSH_USER@$SSH_HOST:$PRODUCTION_PATH/"
