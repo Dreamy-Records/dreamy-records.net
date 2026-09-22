@@ -16,6 +16,14 @@ body {
   color: var(--white);
   font-family: Inter, 'Noto Sans JP', sans-serif;
 }
+::selection {
+  background: #fff;
+  color: #050505;
+}
+::-moz-selection {
+  background: #fff;
+  color: #050505;
+}
 .js.history-return body > :not(.header):not(.global-menu):not(script) {
   opacity: 0;
 }
