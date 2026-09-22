@@ -892,9 +892,10 @@ img {
 .news-tools input:-webkit-autofill,
 .news-tools input:-webkit-autofill:hover,
 .news-tools input:-webkit-autofill:focus {
-  -webkit-text-fill-color: #fff;
-  -webkit-box-shadow: 0 0 0 1000px #050505 inset;
-  caret-color: #fff;
+  -webkit-text-fill-color: #fff !important;
+  -webkit-box-shadow: 0 0 0 1000px #050505 inset !important;
+  caret-color: #fff !important;
+  transition: background-color 99999s ease-out 0s;
 }
 .news-tools select {
   padding: 0 30px 0 13px;

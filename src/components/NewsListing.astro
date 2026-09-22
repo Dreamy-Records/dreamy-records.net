@@ -24,10 +24,16 @@ const pageHref = (page: number) => (page === 1 ? '/news/' : `/news/page/${page}/
 <main class="page-shell dark-page news-page">
   <header class="page-title"><span>02 / NEWS</span><h1>NEWS</h1><p>最新情報</p></header>
   <div class="news-tools-wrap profile-reveal">
-    <form class="news-tools" data-news-filters>
+    <form class="news-tools" data-news-filters autocomplete="off">
       <label class="news-search">
         <span>SEARCH</span>
-        <input type="search" placeholder="キーワードで検索" aria-label="ニュースを検索" data-news-search />
+        <input
+          type="search"
+          placeholder="キーワードで検索"
+          aria-label="ニュースを検索"
+          autocomplete="off"
+          data-news-search
+        />
         <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
       </label>
       <label class="news-filter">
@@ -127,10 +133,16 @@ const pageHref = (page: number) => (page === 1 ? '/news/' : `/news/page/${page}/
       <i class="fa-solid fa-xmark" aria-hidden="true"></i>
     </button>
   </header>
-  <form class="news-tools news-floating-tools" data-news-filters>
+  <form class="news-tools news-floating-tools" data-news-filters autocomplete="off">
     <label class="news-search">
       <span>SEARCH</span>
-      <input type="search" placeholder="キーワードで検索" aria-label="ニュースを検索" data-news-search />
+      <input
+        type="search"
+        placeholder="キーワードで検索"
+        aria-label="ニュースを検索"
+        autocomplete="off"
+        data-news-search
+      />
       <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
     </label>
     <label class="news-filter">
