@@ -32,7 +32,8 @@ const navigationItems = [
   { href: '/media/', label: 'MEDIA', page: 'media' },
   { href: '/contact/', label: 'CONTACT', page: 'contact' },
 ];
-const currentNavigationPage = page === 'news-detail' ? 'news' : page === 'member-detail' ? 'members' : page;
+const currentNavigationPage =
+  page === 'news-detail' ? 'news' : page === 'member-detail' ? 'members' : page;
 const utilityPageLabels: Record<string, string> = {
   'rss-info': 'RSS',
   privacy: 'PRIVACY POLICY',
@@ -41,7 +42,8 @@ const utilityPageLabels: Record<string, string> = {
 };
 const currentPageLabel =
   navigationItems.find((item) => item.page === currentNavigationPage)?.label ??
-  (utilityPageLabels[page] ?? 'HOME');
+  utilityPageLabels[page] ??
+  'HOME';
 ---
 
 <!doctype html>
@@ -86,7 +88,19 @@ const currentPageLabel =
         if (navigation && navigation.type === 'back_forward')
           document.documentElement.classList.add('history-return');
       } catch {}
-    </script></head
+    </script>
+    {
+      !isStaging && (
+        <>
+          <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-MJNKBW52SR" />
+          <script is:inline>
+            window.dataLayer = window.dataLayer || []; function gtag() {'{'}
+            dataLayer.push(arguments);{'}'}
+            gtag('js', new Date()); gtag('config', 'G-MJNKBW52SR');
+          </script>
+        </>
+      )
+    }</head
   >
   <body id="top" class={page ? 'inner-body' : 'home-body'}>
     <header class="header">
@@ -106,7 +120,13 @@ const currentPageLabel =
           ))
         }
       </nav>
-      {page && <span class="mobile-current-page" aria-current="page">{currentPageLabel}</span>}
+      {
+        page && (
+          <span class="mobile-current-page" aria-current="page">
+            {currentPageLabel}
+          </span>
+        )
+      }
       <nav class="header-socials" aria-label="Dreamy Records SNS">
         <a href="https://x.com/dreamy_records" target="_blank" rel="noreferrer" aria-label="X">
           <i class="fa-brands fa-x-twitter" aria-hidden="true"></i>
@@ -185,7 +205,9 @@ const currentPageLabel =
             <a href="/rss-info/">RSS</a>
             <a href="/privacy/">PRIVACY POLICY</a>
             <a href="/sitemap/">SITEMAP</a>
-            <a href="https://old.dreamy-records.net/" target="_blank" rel="noreferrer">OLD SITE</a>
+            <a href="https://old.dreamy-records.net/" target="_blank" rel="noreferrer">
+              OLD SITE
+            </a>
           </nav>
         </footer>
       )
