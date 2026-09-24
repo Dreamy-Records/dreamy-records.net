@@ -775,6 +775,11 @@ img {
   line-height: 1;
   transform: translate(-50%, -50%);
 }
+@media (max-width: 760px) {
+  .menu-socials a i::before {
+    transform: translate(-50%, -50%) translateX(1px);
+  }
+}
 .header-socials a:hover,
 .header-socials a:focus-visible,
 .menu-socials a:hover,
