@@ -282,7 +282,7 @@ img {
   font-size: 11px;
   font-weight: 700;
 }
-.menu-foot a {
+.menu-foot > a {
   border-bottom: 1px solid;
 }
 .home {
@@ -738,14 +738,17 @@ img {
 }
 .header-socials a,
 .menu-socials a {
-  display: grid;
+  display: inline-flex;
+  flex: 0 0 32px;
   width: 32px;
   height: 32px;
-  place-items: center;
+  align-items: center;
+  justify-content: center;
   color: #fff;
   border: 1px solid #ffffff99;
   border-radius: 50%;
   font-size: 15px;
+  line-height: 1;
   transition:
     background 0.2s,
     color 0.2s,
@@ -753,10 +756,18 @@ img {
 }
 .header-socials a i,
 .menu-socials a i {
-  display: block;
-  width: 1em;
+  display: inline-flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
   line-height: 1;
   text-align: center;
+}
+.header-socials a i::before,
+.menu-socials a i::before {
+  display: block;
+  line-height: 1;
 }
 .header-socials a:hover,
 .header-socials a:focus-visible,
@@ -3414,7 +3425,9 @@ img {
   background: #050505;
   color: #fff;
   padding: 0 14px;
-  font: 12px Inter, sans-serif;
+  font:
+    12px Inter,
+    sans-serif;
 }
 .rss-url-box .icon-action {
   min-height: 54px;
