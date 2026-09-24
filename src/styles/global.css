@@ -249,6 +249,7 @@ img {
 .menu-meta,
 .menu-foot {
   display: flex;
+  align-items: center;
   justify-content: space-between;
   font-size: 8px;
   letter-spacing: 0.2em;
@@ -282,7 +283,7 @@ img {
   font-size: 11px;
   font-weight: 700;
 }
-.menu-foot a {
+.menu-foot > a {
   border-bottom: 1px solid;
 }
 .home {
@@ -738,14 +739,18 @@ img {
 }
 .header-socials a,
 .menu-socials a {
-  display: grid;
+  display: inline-flex;
+  flex: 0 0 32px;
+  position: relative;
   width: 32px;
   height: 32px;
-  place-items: center;
+  align-items: center;
+  justify-content: center;
   color: #fff;
   border: 1px solid #ffffff99;
   border-radius: 50%;
   font-size: 15px;
+  line-height: 1;
   transition:
     background 0.2s,
     color 0.2s,
@@ -753,10 +758,27 @@ img {
 }
 .header-socials a i,
 .menu-socials a i {
+  position: absolute;
+  inset: 0;
   display: block;
-  width: 1em;
+  width: auto;
+  height: auto;
   line-height: 1;
   text-align: center;
+}
+.header-socials a i::before,
+.menu-socials a i::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: block;
+  line-height: 1;
+  transform: translate(-50%, -50%);
+}
+@media (max-width: 760px) {
+  .menu-socials a i::before {
+    transform: translate(-50%, -50%) translateX(1px);
+  }
 }
 .header-socials a:hover,
 .header-socials a:focus-visible,
@@ -3414,7 +3436,9 @@ img {
   background: #050505;
   color: #fff;
   padding: 0 14px;
-  font: 12px Inter, sans-serif;
+  font:
+    12px Inter,
+    sans-serif;
 }
 .rss-url-box .icon-action {
   min-height: 54px;
