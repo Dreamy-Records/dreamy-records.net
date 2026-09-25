@@ -58,7 +58,7 @@ export const members: Member[] = [
     name: 'れーか',
     nameEn: 'REEKA',
     role: 'ボーカル',
-    icon: '/assets/members/reika.png',
+    icon: '/assets/members/reeka.png',
     bio: [
       '音ゲーとかコスプレやってるれーかです〜！ 小学生の時に東方Projectに出会い、主にレミリアのコスプレしてます！サークルに始めて加入したのでまだ分からない事だらけですが、私なりにサークルの力になれるよう頑張りますので暖かい目で見てくださると嬉しいです✨️'
     ],
