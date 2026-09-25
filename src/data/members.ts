@@ -58,7 +58,7 @@ export const members: Member[] = [
     name: 'れーか',
     nameEn: 'REEKA',
     role: 'ボーカル',
-    icon: '/assets/members/reika.png',
+    icon: '/assets/members/reeka.png',
     bio: [
       '音ゲーとかコスプレやってるれーかです〜！ 小学生の時に東方Projectに出会い、主にレミリアのコスプレしてます！サークルに始めて加入したのでまだ分からない事だらけですが、私なりにサークルの力になれるよう頑張りますので暖かい目で見てくださると嬉しいです✨️'
     ],
@@ -99,17 +99,6 @@ export const members: Member[] = [
     ],
   },
   {
-    slug: 'naonot',
-    name: 'ナオノット',
-    nameEn: 'NAONOT',
-    role: '運搬 / 搬入 / サポート',
-    icon: '/assets/members/naonot.jpeg',
-    bio: [
-      'オーエンを愛し続ける狂人ナオノットです!!\n小学2年の時からオーエン中毒者やってます!!\n神奈川の民基本搬入、運搬をメインで基本出来る事はなんでもやる奴',
-    ],
-    socials: [{ label: 'X / TWITTER', href: 'https://x.com/nao_not1222' }],
-  },
-  {
     slug: 'junkdaisuki',
     name: 'ジャンク大好き人間',
     nameEn: 'junkdaisuki',
@@ -127,4 +116,16 @@ export const members: Member[] = [
       { label: 'MISSKEY', href: 'https://misskey.io/@DSidaisuki' },
     ],
   },
+  {
+    slug: 'naonot',
+    name: 'ナオノット',
+    nameEn: 'NAONOT',
+    role: '運搬 / 搬入 / サポート',
+    icon: '/assets/members/naonot.jpeg',
+    bio: [
+      'オーエンを愛し続ける狂人ナオノットです!!\n小学2年の時からオーエン中毒者やってます!!\n神奈川の民基本搬入、運搬をメインで基本出来る事はなんでもやる奴',
+    ],
+    socials: [{ label: 'X / TWITTER', href: 'https://x.com/nao_not1222' }],
+  },
+
 ];
