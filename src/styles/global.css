@@ -1783,9 +1783,6 @@ img {
     width: 40px;
     height: 40px;
   }
-  .flow-info .flow-release-button {
-    display: none;
-  }
   .flow-count {
     display: none;
   }
@@ -2152,10 +2149,6 @@ img {
   touch-action: auto;
 }
 @media (max-width: 760px) {
-  .flow-cover.active {
-    cursor: pointer;
-    touch-action: manipulation;
-  }
   .flow-side-arrow.flow-prev {
     left: 2px;
   }

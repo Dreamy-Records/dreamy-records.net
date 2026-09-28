@@ -162,7 +162,6 @@ const releases = [
     const viewButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-music-view]')];
     const current = document.querySelector('#flow-current');
     const flowLink = document.querySelector<HTMLAnchorElement>('#flow-link');
-    const mobileView = window.matchMedia('(max-width: 760px)');
     const activeReleaseKey = 'dreamy-records-active-release';
     const savedActive = Number.parseInt(sessionStorage.getItem(activeReleaseKey) ?? '', 10);
     let active =
@@ -196,13 +195,6 @@ const releases = [
         });
         cover.style.pointerEvents = absoluteDistance > 3 ? 'none' : 'auto';
         cover.classList.toggle('active', distance === 0);
-        if (mobileView.matches && distance === 0) {
-          cover.setAttribute('role', 'link');
-          cover.setAttribute('aria-label', `${cover.dataset.title || '作品'}のページを開く`);
-        } else {
-          cover.removeAttribute('role');
-          cover.removeAttribute('aria-label');
-        }
       });
 
       const selected = covers[active];
@@ -221,14 +213,6 @@ const releases = [
 
     document.querySelector('.flow-prev')?.addEventListener('click', () => navigate(-1));
     document.querySelector('.flow-next')?.addEventListener('click', () => navigate(1));
-
-    covers.forEach((cover, index) => {
-      cover.addEventListener('click', () => {
-        if (!mobileView.matches || index !== active) return;
-        const link = cover.dataset.link;
-        if (link) window.location.assign(link);
-      });
-    });
 
     stage?.addEventListener('pointermove', (event) => {
       if (event.pointerType === 'touch') return;
