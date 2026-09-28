@@ -2165,6 +2165,9 @@ img {
     top: 53%;
     bottom: auto;
   }
+  .flow-info .flow-release-button {
+    margin-top: 28px;
+  }
 }
 
 .coverflow-stage {
