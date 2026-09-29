@@ -4,18 +4,19 @@ import { getNewsSlug } from '../utils/newsSlug';
 
 interface Props {
   articles: CollectionEntry<'news'>[];
+  allArticles: CollectionEntry<'news'>[];
   currentPage: number;
   totalPages: number;
   startIndex: number;
 }
 
-const { articles, currentPage, totalPages, startIndex } = Astro.props;
+const { articles, allArticles, currentPage, totalPages, startIndex } = Astro.props;
 const formatDate = (date: Date) =>
   date
     .toLocaleDateString('ja-JP', { year: 'numeric', month: '2-digit', day: '2-digit' })
     .replaceAll('/', '.');
-const years = [...new Set(articles.map((item) => item.data.date.getFullYear()))].sort((a, b) => b - a);
-const categories = [...new Set(articles.map((item) => item.data.category))].sort((a, b) =>
+const years = [...new Set(allArticles.map((item) => item.data.date.getFullYear()))].sort((a, b) => b - a);
+const categories = [...new Set(allArticles.map((item) => item.data.category))].sort((a, b) =>
   a.localeCompare(b, 'ja'),
 );
 const pageHref = (page: number) => (page === 1 ? '/news/' : `/news/page/${page}/`);
@@ -59,17 +60,19 @@ const pageHref = (page: number) => (page === 1 ? '/news/' : `/news/page/${page}/
   </div>
   <section class="news-list">
     {
-      articles.map((item, index) => (
+      allArticles.map((item, index) => (
         <a
           href={item.data.redirectTo ?? `/news/${getNewsSlug(item)}/`}
           class="news-row"
           data-news-row
+          data-page-visible={index >= startIndex && index < startIndex + articles.length ? 'true' : 'false'}
           data-year={item.data.date.getFullYear()}
           data-category={item.data.category}
           data-search={`${item.data.title} ${item.data.category} ${formatDate(item.data.date)}`}
           aria-label={item.data.redirectTo ? `${item.data.title}（外部サイトへ移動）` : item.data.title}
+          hidden={index < startIndex || index >= startIndex + articles.length}
         >
-          <span class="news-index">{String(startIndex + index + 1).padStart(2, '0')}</span>
+          <span class="news-index">{String(index + 1).padStart(2, '0')}</span>
           <time datetime={item.data.date.toISOString()}>{formatDate(item.data.date)}</time>
           <span class="category">{item.data.category}</span>
           <h2>{item.data.title}</h2>
@@ -175,6 +178,7 @@ const pageHref = (page: number) => (page === 1 ? '/news/' : `/news/page/${page}/
   const floatingClose = document.querySelector<HTMLButtonElement>('[data-news-floating-close]');
   const rows = [...document.querySelectorAll<HTMLElement>('[data-news-row]')];
   const status = document.querySelector<HTMLElement>('[data-news-filter-status]');
+  const pagination = document.querySelector<HTMLElement>('.news-pagination');
   const normalize = (value: string) => value.toLocaleLowerCase('ja-JP').trim();
   let floatingTriggerAnimation: Animation | undefined;
   const controls = (form: HTMLFormElement) => ({
@@ -221,6 +225,7 @@ const pageHref = (page: number) => (page === 1 ? '/news/' : `/news/page/${page}/
     const query = normalize(sourceControls.search?.value ?? '');
     const year = sourceControls.year?.value ?? '';
     const category = sourceControls.category?.value ?? '';
+    const hasFilters = Boolean(query || year || category);
     filterForms.forEach((form) => {
       if (form === source) return;
       const targetControls = controls(form);
@@ -234,10 +239,17 @@ const pageHref = (page: number) => (page === 1 ? '/news/' : `/news/page/${page}/
         (!query || normalize(row.dataset.search ?? '').includes(query)) &&
         (!year || row.dataset.year === year) &&
         (!category || row.dataset.category === category);
-      row.hidden = !matches;
+      row.hidden = hasFilters ? !matches : row.dataset.pageVisible !== 'true';
       if (matches) count += 1;
     });
-    if (status) status.textContent = count ? `${count}件の記事を表示中` : '該当する記事がありません。';
+    if (pagination) pagination.hidden = hasFilters;
+    if (status) {
+      status.textContent = hasFilters
+        ? count
+          ? `${count}件の記事を表示中`
+          : '該当する記事がありません。'
+        : '';
+    }
   };
   filterForms.forEach((form) => {
     const formControls = controls(form);
