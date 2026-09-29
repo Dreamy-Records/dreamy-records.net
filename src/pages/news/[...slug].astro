@@ -29,6 +29,8 @@ const xShareUrl = `https://x.com/intent/post?${new URLSearchParams({
   page="news-detail"
   description={articleDescription}
   image={entry.data.image}
+  redirectTo={entry.data.redirectTo}
+  noindex={Boolean(entry.data.redirectTo)}
 >
   <main class="article-page">
     <a class="article-back" href="/news/">← ALL NEWS</a>
