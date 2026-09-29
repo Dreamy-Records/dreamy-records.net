@@ -34,6 +34,7 @@ const { articles: pageArticles, currentPage, startIndex } = Astro.props;
 <SiteLayout title={`News — Page ${currentPage} — Dreamy Records`} page="news">
   <NewsListing
     articles={pageArticles}
+    allArticles={articles}
     currentPage={currentPage}
     totalPages={totalPages}
     startIndex={startIndex}

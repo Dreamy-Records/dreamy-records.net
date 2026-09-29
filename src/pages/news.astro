@@ -11,6 +11,7 @@ const totalPages = Math.ceil(articles.length / articlesPerPage);
 <SiteLayout title="News — Dreamy Records" page="news">
   <NewsListing
     articles={articles.slice(0, articlesPerPage)}
+    allArticles={articles}
     currentPage={1}
     totalPages={totalPages}
     startIndex={0}
