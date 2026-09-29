@@ -8,6 +8,7 @@ interface Props {
   description?: string;
   image?: string;
   noindex?: boolean;
+  redirectTo?: string;
 }
 
 const {
@@ -16,6 +17,7 @@ const {
   description = '東方同人音楽アレンジサークル Dreamy Records 公式サイト',
   image,
   noindex = false,
+  redirectTo,
 }: Props = Astro.props;
 const defaultOgImage = '/assets/news/19-Dreamy-Records-header-1.png';
 const ogImageBase = import.meta.env.DEV ? Astro.url.origin : Astro.site;
@@ -52,7 +54,7 @@ const currentPageLabel =
     ><meta charset="UTF-8" /><meta name="viewport" content="width=device-width" /><meta
       name="description"
       content={description}
-    />{(isStaging || noindex) && <meta name="robots" content="noindex, nofollow, noarchive" />}<link
+    />{redirectTo && <meta http-equiv="refresh" content={`0;url=${redirectTo}`} />}{(isStaging || noindex) && <meta name="robots" content="noindex, nofollow, noarchive" />}<link
       rel="alternate"
       type="application/rss+xml"
       title="Dreamy Records NEWS"
@@ -89,6 +91,13 @@ const currentPageLabel =
           document.documentElement.classList.add('history-return');
       } catch {}
     </script>
+    {
+      redirectTo && (
+        <script is:inline define:vars={{ redirectTo }}>
+          window.location.replace(redirectTo);
+        </script>
+      )
+    }
     {
       !isStaging && (
         <>
