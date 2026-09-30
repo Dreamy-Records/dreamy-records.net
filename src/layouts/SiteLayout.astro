@@ -247,73 +247,90 @@ const currentPageLabel =
         const historyReturn = document.documentElement.classList.contains('history-return');
         const menuLinks = gsap.utils.toArray<HTMLElement>('.global-menu > nav a');
         const menuFooterItems = gsap.utils.toArray<HTMLElement>('.menu-socials, .menu-foot > span');
-        let menuTransition = 0;
+        const menuItems = [...menuLinks, ...menuFooterItems];
+        let menuIsOpen = false;
+        let menuAnimation: gsap.core.Timeline | undefined;
+        let clearMenuItemsTimer: number | undefined;
         button?.addEventListener('click', () => {
           if (!menu) return;
-          const transitionId = ++menuTransition;
-          const open = button.getAttribute('aria-expanded') === 'true';
-          button.setAttribute('aria-expanded', String(!open));
-          button.setAttribute('aria-label', open ? 'メニューを開く' : 'メニューを閉じる');
-          menu.setAttribute('aria-hidden', String(open));
-          document.body.classList.toggle('menu-open', !open);
+          if (clearMenuItemsTimer !== undefined) {
+            window.clearTimeout(clearMenuItemsTimer);
+            clearMenuItemsTimer = undefined;
+          }
+          menuIsOpen = !menuIsOpen;
+          button.setAttribute('aria-expanded', String(menuIsOpen));
+          button.setAttribute('aria-label', menuIsOpen ? 'メニューを閉じる' : 'メニューを開く');
+          menu.setAttribute('aria-hidden', String(!menuIsOpen));
+          document.body.classList.toggle('menu-open', menuIsOpen);
+          menuAnimation?.kill();
+          gsap.killTweensOf(menuItems);
+
           if (reduce) {
-            menu.classList.toggle('is-open', !open);
+            menu.classList.toggle('is-open', menuIsOpen);
+            gsap.set(menuItems, { clearProps: 'opacity,transform' });
             return;
           }
 
-          gsap.killTweensOf([...menuLinks, ...menuFooterItems]);
-
-          if (!open) {
+          if (menuIsOpen) {
             menu.classList.add('is-open');
-            gsap.fromTo(
-              menuLinks,
-              { y: 45, opacity: 0 },
-              {
-                y: 0,
-                opacity: 1,
-                duration: 0.65,
-                stagger: 0.08,
-                ease: 'power3.out',
-                delay: 0.2,
-                clearProps: 'opacity,transform',
-              },
-            );
-            gsap.fromTo(
-              menuFooterItems,
-              { y: 18, opacity: 0 },
-              {
-                y: 0,
-                opacity: 1,
-                duration: 0.55,
-                stagger: 0.1,
-                ease: 'power3.out',
-                delay: 0.4,
-                clearProps: 'opacity,transform',
-              },
-            );
+            menuAnimation = gsap
+              .timeline()
+              .fromTo(
+                menuLinks,
+                { y: 45, opacity: 0 },
+                {
+                  y: 0,
+                  opacity: 1,
+                  duration: 0.65,
+                  stagger: 0.08,
+                  ease: 'power3.out',
+                  delay: 0.2,
+                  clearProps: 'opacity,transform',
+                },
+              )
+              .fromTo(
+                menuFooterItems,
+                { y: 18, opacity: 0 },
+                {
+                  y: 0,
+                  opacity: 1,
+                  duration: 0.55,
+                  stagger: 0.1,
+                  ease: 'power3.out',
+                  clearProps: 'opacity,transform',
+                },
+                0.4,
+              );
           } else {
-            gsap.to(menuLinks, {
-              y: -24,
-              opacity: 0,
-              duration: 0.28,
-              stagger: { each: 0.045, from: 'end' },
-              ease: 'power2.in',
-              onComplete: () => {
-                if (transitionId !== menuTransition) return;
-                menu.classList.remove('is-open');
-                window.setTimeout(() => {
-                  if (transitionId !== menuTransition) return;
-                  gsap.set(menuLinks, { clearProps: 'opacity,transform' });
-                }, 680);
-              },
-            });
-            gsap.to(menuFooterItems, {
-              y: -12,
-              opacity: 0,
-              duration: 0.24,
-              stagger: { each: 0.06, from: 'end' },
-              ease: 'power2.in',
-            });
+            menuAnimation = gsap
+              .timeline({
+                onComplete: () => {
+                  if (menuIsOpen) return;
+                  menu.classList.remove('is-open');
+                  clearMenuItemsTimer = window.setTimeout(() => {
+                    if (!menuIsOpen) gsap.set(menuItems, { clearProps: 'opacity,transform' });
+                    clearMenuItemsTimer = undefined;
+                  }, 700);
+                },
+              })
+              .to(menuLinks, {
+                y: -24,
+                opacity: 0,
+                duration: 0.28,
+                stagger: { each: 0.045, from: 'end' },
+                ease: 'power2.in',
+              })
+              .to(
+                menuFooterItems,
+                {
+                  y: -12,
+                  opacity: 0,
+                  duration: 0.24,
+                  stagger: { each: 0.06, from: 'end' },
+                  ease: 'power2.in',
+                },
+                0,
+              );
           }
         });
         if (!reduce && !historyReturn && !fallbackRevealed) {
