@@ -250,8 +250,13 @@ const currentPageLabel =
         const menuItems = [...menuLinks, ...menuFooterItems];
         let menuIsOpen = false;
         let menuAnimation: gsap.core.Timeline | undefined;
+        let clearMenuItemsTimer: number | undefined;
         button?.addEventListener('click', () => {
           if (!menu) return;
+          if (clearMenuItemsTimer !== undefined) {
+            window.clearTimeout(clearMenuItemsTimer);
+            clearMenuItemsTimer = undefined;
+          }
           menuIsOpen = !menuIsOpen;
           button.setAttribute('aria-expanded', String(menuIsOpen));
           button.setAttribute('aria-label', menuIsOpen ? 'メニューを閉じる' : 'メニューを開く');
@@ -302,7 +307,10 @@ const currentPageLabel =
                 onComplete: () => {
                   if (menuIsOpen) return;
                   menu.classList.remove('is-open');
-                  gsap.set(menuItems, { clearProps: 'opacity,transform' });
+                  clearMenuItemsTimer = window.setTimeout(() => {
+                    if (!menuIsOpen) gsap.set(menuItems, { clearProps: 'opacity,transform' });
+                    clearMenuItemsTimer = undefined;
+                  }, 700);
                 },
               })
               .to(menuLinks, {
