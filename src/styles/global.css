@@ -1913,6 +1913,8 @@ img {
 .article-body a {
   border-bottom: 1px solid #fff;
   padding-bottom: 2px;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 .article-body strong {
   font-weight: 800;
