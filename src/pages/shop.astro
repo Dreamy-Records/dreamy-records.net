@@ -1,5 +1,6 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
+import OptimizedImage from '../components/OptimizedImage.astro';
 
 const shops = [
   {
@@ -42,7 +43,7 @@ const shops = [
           <a class="shop-card shop-reveal" href={shop.href} target="_blank" rel="noreferrer">
             {shop.logo ? (
               <span class="shop-logo">
-                <img src={shop.logo} alt={shop.name} />
+                <OptimizedImage src={shop.logo} alt={shop.name} loading="lazy" />
               </span>
             ) : (
               <span class="shop-logo shop-logo--text">{shop.name}</span>

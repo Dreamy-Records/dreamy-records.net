@@ -1,5 +1,6 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
+import OptimizedImage from '../components/OptimizedImage.astro';
 
 const slides = [
   '/assets/Dreamy Records header.png',
@@ -13,12 +14,15 @@ const slides = [
     <div class="hero-slides" aria-label="Dreamy Records ビジュアル">
       {
         slides.map((src, index) => (
-          <img
+          <OptimizedImage
             class="hero-slide"
             src={src}
             alt=""
-            aria-hidden={index === 0 ? 'false' : 'true'}
+            ariaHidden={index === 0 ? 'false' : 'true'}
             loading={index === 0 ? 'eager' : 'lazy'}
+            decoding="async"
+            widths={[640, 960, 1280, 1920]}
+            sizes="100vw"
           />
         ))
       }

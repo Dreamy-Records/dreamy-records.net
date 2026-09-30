@@ -24,6 +24,7 @@
 | アニメーション | [GSAP](https://gsap.com/)                   |
 | アイコン       | Font Awesome                                |
 | RSS            | `@astrojs/rss`                              |
+| 画像最適化     | Astro `astro:assets`（WebP + フォールバック） |
 | アクセス解析   | Google Analytics 4                          |
 | テスト環境     | Cloudflare Pages                            |
 | 本番環境       | SSH + rsync                                 |
@@ -98,6 +99,15 @@ WordPress記事はMarkdownへ移行済みです。旧URLから新しいニュー
 - `src/data/legacyRedirects.ts` — Astroの旧URL転送
 - `public/_redirects` — 静的ホスティング向け転送ルール
 - `scripts/migrate-wordpress.mjs` — WordPress記事移行用スクリプト
+
+### 画像の自動最適化
+
+`public/assets/` に置いた PNG / JPEG / WebP / AVIF は、`npm run build` の直前に
+Astro画像最適化用の作業ディレクトリへ自動同期されます。共通の `OptimizedImage`
+コンポーネントを使うページでは、表示幅に合う複数サイズのWebPを生成して優先配信します。
+
+WebPに対応しない古いブラウザには、同じ画像から生成した PNG / JPEG のフォールバックを
+`<img>` として返します。画像の追加はこれまでどおり `public/assets/` に置くだけで構いません。
 
 ## デプロイ
 

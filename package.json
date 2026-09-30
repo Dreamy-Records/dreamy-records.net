@@ -3,7 +3,10 @@
   "type": "module",
   "version": "1.0.0",
   "scripts": {
+    "sync:images": "node scripts/sync-image-assets.mjs",
+    "predev": "npm run sync:images",
     "dev": "astro dev",
+    "prebuild": "npm run sync:images",
     "build": "astro build",
     "preview": "astro preview",
     "format": "prettier --write .",

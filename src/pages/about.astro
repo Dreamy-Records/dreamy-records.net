@@ -1,5 +1,6 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
+import OptimizedImage from '../components/OptimizedImage.astro';
 ---
 
 <SiteLayout title="About — Dreamy Records" page="about">
@@ -32,7 +33,13 @@ import SiteLayout from '../layouts/SiteLayout.astro';
     </section>
 
     <section class="about-visual about-reveal">
-      <img src="/assets/Dreamy Records header.png" alt="Dreamy Records作品アートワーク" />
+      <OptimizedImage
+        src="/assets/Dreamy Records header.png"
+        alt="Dreamy Records作品アートワーク"
+        loading="lazy"
+        widths={[640, 960, 1280]}
+        sizes="(max-width: 767px) calc(100vw - 48px), 1280px"
+      />
       <p>DREAMY RECORDS<br />EST. 2022</p>
     </section>
 

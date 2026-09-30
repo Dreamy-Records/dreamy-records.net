@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import OptimizedImage from '../components/OptimizedImage.astro';
 
 interface Props {
   title?: string;
@@ -118,7 +119,7 @@ const currentPageLabel =
   <body id="top" class={page ? 'inner-body' : 'home-body'}>
     <header class="header">
       <a href="/" class="brand">
-        <img src="/assets/logo.png" alt="Dreamy Records" />
+        <OptimizedImage src="/assets/logo.png" alt="Dreamy Records" />
       </a>
       <nav class="desktop-nav" aria-label="メインナビゲーション">
         {

@@ -1,0 +1,66 @@
+---
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  loading?: 'eager' | 'lazy';
+  decoding?: 'async' | 'sync' | 'auto';
+  draggable?: boolean;
+  ariaHidden?: boolean | 'true' | 'false';
+  widths?: number[];
+  sizes?: string;
+}
+
+const { src, alt, class: className, loading, decoding, draggable, ariaHidden, widths, sizes } = Astro.props;
+
+const localImages = import.meta.glob<ImageMetadata>(
+  [
+    '../assets/**/*.avif',
+    '../assets/**/*.jpg',
+    '../assets/**/*.jpeg',
+    '../assets/**/*.png',
+    '../assets/**/*.webp',
+  ],
+  {
+    eager: true,
+    import: 'default',
+  },
+);
+const image = localImages[`..${decodeURIComponent(src)}`];
+
+if (!image) {
+  throw new Error(`最適化対象の画像が見つかりません: ${src}`);
+}
+
+const responsiveWidths =
+  widths ?? [320, 640, 960].filter((width) => width < image.width);
+const outputWidths = responsiveWidths.length ? responsiveWidths : [image.width];
+const webpSources = await Promise.all(
+  outputWidths.map((width) => getImage({ src: image, width, format: 'webp' })),
+);
+const fallbackFormat = image.format === 'webp' || image.format === 'avif' ? 'png' : image.format;
+const fallback = await getImage({
+  src: image,
+  width: Math.min(image.width, 960),
+  format: fallbackFormat,
+});
+const srcset = webpSources.map((source, index) => `${source.src} ${outputWidths[index]}w`).join(', ');
+---
+
+<picture>
+  <source srcset={srcset} sizes={sizes ?? '100vw'} type="image/webp" />
+  <img
+    src={fallback.src}
+    alt={alt}
+    width={fallback.attributes.width}
+    height={fallback.attributes.height}
+    class={className}
+    loading={loading}
+    decoding={decoding}
+    draggable={draggable}
+    aria-hidden={ariaHidden}
+  />
+</picture>
