@@ -36,16 +36,17 @@ if (!image) {
 }
 
 const responsiveWidths =
-  widths ?? [320, 640, 960].filter((width) => width < image.width);
+  widths ?? [320, 640, 960, 1280].filter((width) => width < image.width);
 const outputWidths = responsiveWidths.length ? responsiveWidths : [image.width];
 const webpSources = await Promise.all(
-  outputWidths.map((width) => getImage({ src: image, width, format: 'webp' })),
+  outputWidths.map((width) => getImage({ src: image, width, format: 'webp', quality: 95 })),
 );
 const fallbackFormat = image.format === 'webp' || image.format === 'avif' ? 'png' : image.format;
 const fallback = await getImage({
   src: image,
   width: Math.min(image.width, 960),
   format: fallbackFormat,
+  quality: 95,
 });
 const srcset = webpSources.map((source, index) => `${source.src} ${outputWidths[index]}w`).join(', ');
 ---
