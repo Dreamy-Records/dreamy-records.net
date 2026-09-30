@@ -1,5 +1,6 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
+import OptimizedImage from '../components/OptimizedImage.astro';
 
 const xfdVideos = [
   { title: 'Summer Diary', videoId: 'W8YXCUVvB-A' },
@@ -152,7 +153,7 @@ const wallpapers = [
         {
           wallpapers.map((wallpaper) => (
             <a class="wallpaper-card" href={wallpaper.image} download>
-              <img src={wallpaper.image} alt={`${wallpaper.title} 壁紙`} loading="lazy" />
+              <OptimizedImage src={wallpaper.image} alt={`${wallpaper.title} 壁紙`} loading="lazy" />
               <span>
                 <strong>{wallpaper.title}</strong>
                 <small>{wallpaper.size}</small>

@@ -1,5 +1,6 @@
 ---
 import SiteLayout from '../layouts/SiteLayout.astro';
+import OptimizedImage from '../components/OptimizedImage.astro';
 const releases = [
   {
     code: 'DMERCD–011',
@@ -106,9 +107,9 @@ const releases = [
               data-year={release.year}
               data-link={release.link}
             >
-              <img src={release.image} alt={`${release.title} ジャケット`} draggable="false" />
+              <OptimizedImage src={release.image} alt={`${release.title} ジャケット`} draggable={false} />
               <span class="reflection">
-                <img src={release.image} alt="" draggable="false" />
+                <OptimizedImage src={release.image} alt="" draggable={false} />
               </span>
             </div>
           ))
@@ -138,7 +139,7 @@ const releases = [
           <a class="music-item" href={release.link}>
             <span class="music-no">{String(releases.length - index).padStart(2, '0')}</span>
             <span class="music-cover">
-              <img src={release.image} alt={`${release.title} ジャケット`} loading="lazy" />
+              <OptimizedImage src={release.image} alt={`${release.title} ジャケット`} loading="lazy" />
             </span>
             <span class="music-title">
               <small>

@@ -301,6 +301,9 @@ img {
   width: 100%;
   height: 100%;
 }
+.hero-slides > picture {
+  display: contents;
+}
 .hero-slides {
   z-index: 0;
   overflow: hidden;
@@ -312,7 +315,7 @@ img {
   opacity: 0;
   will-change: opacity, transform;
 }
-.hero-slide:first-child {
+.hero-slides > picture:first-child .hero-slide {
   opacity: 1;
 }
 .shade {
@@ -1656,7 +1659,12 @@ img {
   will-change: transform, opacity;
   box-shadow: 0 25px 70px #000;
 }
-.flow-cover > img {
+.flow-cover > picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.flow-cover > picture > img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -3030,7 +3038,12 @@ img {
   background: #111;
   overflow: hidden;
 }
-.profile-icon > img {
+.profile-icon > picture {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.profile-icon > picture > img {
   width: 100%;
   height: 100%;
   object-fit: cover;

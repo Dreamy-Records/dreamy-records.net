@@ -2,6 +2,7 @@
 import SiteLayout from '../../layouts/SiteLayout.astro';
 import { getCollection, render } from 'astro:content';
 import { assertUniqueNewsSlugs, getNewsDescription, getNewsSlug } from '../../utils/newsSlug';
+import OptimizedImage from '../../components/OptimizedImage.astro';
 
 export async function getStaticPaths() {
   const entries = await getCollection('news');
@@ -45,7 +46,7 @@ const xShareUrl = `https://x.com/intent/post?${new URLSearchParams({
       </header>
       {
         entry.data.image && entry.data.showImage && (
-          <img class="article-image" src={entry.data.image} alt="" />
+          <OptimizedImage class="article-image" src={entry.data.image} alt="" loading="lazy" />
         )
       }
       <div class="article-body"><Content /></div>
