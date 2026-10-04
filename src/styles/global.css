@@ -32,6 +32,13 @@ body {
   /* Keep pinch zoom available while preventing double-tap page zoom. */
   touch-action: manipulation;
 }
+body.menu-open {
+  position: fixed;
+  right: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+}
 a {
   color: inherit;
   text-decoration: none;
