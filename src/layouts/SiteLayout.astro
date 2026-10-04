@@ -256,6 +256,22 @@ const currentPageLabel =
         let menuIsOpen = false;
         let menuAnimation: gsap.core.Timeline | undefined;
         let clearMenuItemsTimer: number | undefined;
+        let pageScrollY = 0;
+        let pageScrollLocked = false;
+        const lockPageScroll = () => {
+          if (pageScrollLocked) return;
+          pageScrollY = window.scrollY;
+          pageScrollLocked = true;
+          document.body.style.top = `-${pageScrollY}px`;
+          document.body.classList.add('menu-open');
+        };
+        const unlockPageScroll = () => {
+          if (!pageScrollLocked) return;
+          document.body.classList.remove('menu-open');
+          document.body.style.removeProperty('top');
+          pageScrollLocked = false;
+          window.scrollTo(0, pageScrollY);
+        };
         button?.addEventListener('click', () => {
           if (!menu) return;
           if (clearMenuItemsTimer !== undefined) {
@@ -266,7 +282,8 @@ const currentPageLabel =
           button.setAttribute('aria-expanded', String(menuIsOpen));
           button.setAttribute('aria-label', menuIsOpen ? 'メニューを閉じる' : 'メニューを開く');
           menu.setAttribute('aria-hidden', String(!menuIsOpen));
-          document.body.classList.toggle('menu-open', menuIsOpen);
+          if (menuIsOpen) lockPageScroll();
+          else unlockPageScroll();
           menuAnimation?.kill();
           gsap.killTweensOf(menuItems);
 
