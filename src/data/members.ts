@@ -24,22 +24,6 @@ export const members: Member[] = [
     ],
   },
   {
-    slug: 'massun',
-    name: 'まっすん',
-    nameEn: 'MASSUN',
-    role: 'ボーカル',
-    icon: '/assets/members/massun.jpeg',
-    bio: [
-      '2007年10月10日長野県生まれ東京育ち。\n幼稚園の頃にゆっくり実況に出会い、小学生の頃に東方Projectに出会う。現在はコスプレやボーカル等で活動をしている。東方二コレクション「Bad Apple!! feat.nomico 」踊ってみた部門でいいね賞を受賞。'
-        ],
-    socials: [
-      { label: 'X / TWITTER', href: 'https://x.com/Massun_Usagi13' },
-      { label: 'YOUTUBE', href: 'https://www.youtube.com/@massun1010' },
-      { label: 'INSTAGRAM', href: 'https://www.instagram.com/massun_1010?igsh=MWsxNXlpeGo4aTBkOA%3D%3D&utm_source=qr' },
-      { label: 'TIKTOK' , href: 'https://www.tiktok.com/@tokyomassun?_t=ZS-8vHefOBxB3I&_r=1' },     
-    ],
-  },
-  {
     slug: 'Echi-Echi_Man_Takashi',
     name: 'えちえちマンたかし',
     nameEn: 'Echi-Echi Man Takashi',
@@ -52,33 +36,6 @@ export const members: Member[] = [
       { label: 'X / TWITTER', href: 'https://x.com/TOMATOkatuzetu' },
       { label: 'YOUTUBE', href: 'https://youtube.com/channel/UCxu7Md1PbkYe8tveON_jcGA?si=abA8kjrY8bJ6iWWx' },
     ],
-  },
-  {
-    slug: 'reeka',
-    name: 'れーか',
-    nameEn: 'REEKA',
-    role: 'ボーカル',
-    icon: '/assets/members/reeka.png',
-    bio: [
-      '音ゲーとかコスプレやってるれーかです〜！ 小学生の時に東方Projectに出会い、主にレミリアのコスプレしてます！サークルに始めて加入したのでまだ分からない事だらけですが、私なりにサークルの力になれるよう頑張りますので暖かい目で見てくださると嬉しいです✨️'
-    ],
-    socials: [
-      { label: 'X / TWITTER', href: 'hhttps://x.com/@Reeka_0203' },
-      { label: 'INSTAGRAM', href: 'https://www.instagram.com/Reeka_0203' },
-      { label: 'TIKTOK', href: 'https://www.tiktok.com/@Reeka_0203' },
-      { label: 'YOUTUBE', href: 'https://youtube.com/channel/UC4MKPtjlNa5I-CzbaEvr9Yw?feature=shared' },
-    ],
-  },
-  {
-    slug: 'KOMOJINOR',
-    name: '小文字のr',
-    nameEn: 'KOMOJINOR',
-    role: 'ボーカル',
-    icon: '/assets/members/lowercase-r.jpeg',
-    bio: [
-      '歌とお絵描きが大好きな人です。小学校4年生の時に友人から勧められて東方を知り、小学校6年生の時には東方原曲、vocalにドハマりしました。サークル初心者で右も左もわからない人間ですが、これからどうぞよろしくお願いいたします。'
-    ],
-    socials: [{ label: 'X / TWITTER', href: 'https://x.com/Fjmk_ksm/' }],
   },
   {
     slug: 'kudaken',
