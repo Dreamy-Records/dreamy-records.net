@@ -15,7 +15,7 @@ export const members: Member[] = [
     role: '編曲 / DJ / ボーカル / 代表',
     icon: '/assets/members/myon.webp',
     bio: [
-      'Dreamy Records代表。\n中学生時代に東方アレンジなどに影響を受け、サークル活動を開始。\nTranceやHardmusicを得意としており、サークルの楽曲制作、ボーカル、DJなどをする他、踊ってみたでも活動しており、あつまれ東方ステーション2024Bad Apple!!feat.nomico踊ってみたで出演したりしてる。'
+      'Phos’Prism代表。\n中学生時代に東方アレンジなどに影響を受け、サークル活動を開始。\nTranceやHardmusicを得意としており、サークルの楽曲制作、ボーカル、DJなどをする他、踊ってみたでも活動しており、あつまれ東方ステーション2024Bad Apple!!feat.nomico踊ってみたで出演したりしてる。'
 
     ],
     socials: [
@@ -35,6 +35,38 @@ export const members: Member[] = [
     socials: [
       { label: 'X / TWITTER', href: 'https://x.com/TOMATOkatuzetu' },
       { label: 'YOUTUBE', href: 'https://youtube.com/channel/UCxu7Md1PbkYe8tveON_jcGA?si=abA8kjrY8bJ6iWWx' },
+    ],
+  },
+  {
+    slug: 'penerope',
+    name: 'ぺねろぺ',
+    nameEn: 'PENEROPE',
+    role: '作詞 / ボーカル',
+    icon: '/assets/members/penerope.png',
+    bio: [
+      '依神紫苑ガチオタクのぺねろぺです。\n小学一年生の頃に東方Projectと出会い、その魅力に惹かれて今に至るまで東方を愛し続けています。中学生の頃にはネットラップに出会い、音楽への興味を深めていきました。\nそして19歳から、東方ヴォーカル・ラップの活動を開始。\n東方への愛を音楽に乗せ、自分らしい表現を追求しながら、日々精進していきます。\nよろしくお願いします！'
+    ],
+    socials: [
+      { label: 'X / TWITTER', href: 'https://x.com/lv6_k0' },
+      { label: 'YOUTUBE', href: 'https://youtube.com/@ぺねろぺちゃん' },
+      { label: 'TIKTOK', href: 'https://tiktok.com/@k0ishi310' },
+
+    ],
+  },
+  {
+    slug: 'tokoyo_raika',
+    name: '常世ライカ',
+    nameEn: 'TOKOYO RAIKA',
+    role: 'ボーカル',
+    icon: '/assets/members/tokoyo_raika.jpeg',
+    bio: [
+      'はじめまして！\nこのたびボーカルとして参加させていただくことになりました、常世ライカと申します！🐼\n\n神奈川県民クォーターの1523歳、杏仁豆腐をこよなく愛する仙人です。\n\n普段は歌ってみたやゲーム配信を中心に活動しています！\n\n歌うことはもちろん、歌詞の解釈や感情表現が大好きで、綺麗に歌うのも、感情をぐちゃぐちゃにして歌うのも好きです。\n声色やニュアンスを使った表現が得意なので、楽曲の世界観に合わせていろいろな引き出しを開けていけたらと思っています！\n\n東方ボーカルは以前から好きで、いちファンとして聴いていました。\n原曲についてはまだまだ勉強中ですが、これからもっと東方の世界に浸っていきたいです。\n\n素敵な作品づくりに携われること、とても楽しみにしています！\nどうぞよろしくお願いいたします！✨'
+    ],
+    socials: [
+      { label: 'X / TWITTER', href: 'https://x.com/tokoyo_raika' },
+      { label: 'YOUTUBE', href: 'https://youtube.com/channel/UC6LzXDPM99TUeC6eqRQ7awA?si=7PMS71K7iMAZ9KR0' },
+      { label: 'TIKTOK', href: 'https://tiktok.com/@tokoyo_raika' },
+
     ],
   },
   {
