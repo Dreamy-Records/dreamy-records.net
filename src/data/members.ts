@@ -27,7 +27,7 @@ export const members: Member[] = [
     slug: 'Echi-Echi_Man_Takashi',
     name: 'えちえちマンたかし',
     nameEn: 'Echi-Echi Man Takashi',
-    role: '作詞 / ボーカル',
+    role: '作詞',
     icon: '/assets/members/takashi.png',
     bio: [
       'ダンカグのあのえちえちマンたかし本人かなまいの幻想入りRadioでハガキを投稿している。\n東方知ったのは鈴仙うどんげのエロ同人\n作詞担当気分が乗れば編曲とボーカルをいずれやるかも？\nいつのまにかサークルよりコスプレしかしてない人間\n東方ニコレクションのマツヨイナイトバグ歌ってみたでイイネ賞受賞\n一応最年長である。保護者ですよろしくね'
